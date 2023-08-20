@@ -123,11 +123,7 @@ public abstract class AbstractClientRegisterManager {
 		RegistryService registryService = serviceLoader.iterator().next();
 		registryService.initialized(gatewayProperties.getRegistryAddress());
 		this.registryService = registryService;
-		// for(RegistryService registryService : serviceLoader) {
-		// 	registryService.initialized(gatewayProperties.getRegistryAddress());
-		// 	this.registryService = registryService;
-		// }
-		
+
 		//	3. 注册构建顶级目录结构
 		generatorStructPath(Registry.PATH + namespace + BasicConst.BAR_SEPARATOR + env);
 	}
@@ -139,14 +135,11 @@ public abstract class AbstractClientRegisterManager {
 		/**
 		 * 	/netty-gateway-dev
 		 * 		/services
-		 * 			/serviceA:1.0.0  ==> ServiceDefinition
-		 * 			/serviceA:2.0.0
-		 * 			/serviceB:1.0.0
+		 * 			/serviceA  ==> ServiceDefinition
+		 * 			/serviceB
 		 * 		/instances
-		 * 			/serviceA:1.0.0/192.168.11.100:port	 ==> ServiceInstance
-		 * 			/serviceA:1.0.0/192.168.11.101:port
-		 * 			/serviceB:1.0.0/192.168.11.102:port
-		 * 			/serviceA:2.0.0/192.168.11.103:port
+		 * 			/serviceA/192.168.11.100:port	 ==> ServiceInstance
+		 * 			/serviceB/192.168.11.102:port
 		 * 		/rules
 		 * 			/ruleId1	==>	Rule
 		 * 			/ruleId2
@@ -165,7 +158,7 @@ public abstract class AbstractClientRegisterManager {
 	protected void registerServiceDefinition(ServiceDefinition serviceDefinition) throws Exception {
 		String key = servicesPath 
 				+ Registry.PATH
-				+ serviceDefinition.getUniqueId();
+				+ serviceDefinition.getServiceId();
 		if(!registryService.isExistKey(key)) {
 			String value = FastJsonConvertUtil.convertObjectToJSON(serviceDefinition);
 			registryService.registerPathIfNotExists(key, value, true);
@@ -178,7 +171,7 @@ public abstract class AbstractClientRegisterManager {
 	protected void registerServiceInstance(ServiceInstance serviceInstance) throws Exception {
 		String key = instancesPath
 				+ Registry.PATH
-				+ serviceInstance.getUniqueId()
+				+ serviceInstance.getServiceId()
 				+ Registry.PATH
 				+ serviceInstance.getServiceInstanceId();
 		if(!registryService.isExistKey(key)) {

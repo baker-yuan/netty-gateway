@@ -6,9 +6,7 @@ package com.baker.gateway.common.constants;
 public interface GatewayConst {
 
 	String Gateway = "gateway";
-	
-	String UNIQUE_ID = "uniqueId";
-	
+
 	String DEFAULT_VERSION = "1.0.0";
 	
 	String PROTOCOL_KEY = "protocol";

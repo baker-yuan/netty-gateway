@@ -64,9 +64,9 @@ public class LoadBalancePreFilter extends AbstractEntryProcessorFilter<LoadBalan
 
     private void doHttpLoadBalance(GatewayContext gatewayContext, LoadBalanceStrategy loadBalanceStrategy) {
         GatewayRequest gatewayRequest = gatewayContext.getRequest();
-        String uniqueId = gatewayRequest.getUniqueId();
+        String serviceId = gatewayRequest.getServiceId();
         Set<ServiceInstance> serviceInstances = DynamicConfigManager.getInstance()
-                .getServiceInstanceByUniqueId(uniqueId);
+                .getServiceInstanceByServiceId(serviceId);
 
         gatewayContext.putAttribute(AttributeKey.MATCH_INSTANCES, serviceInstances);
 

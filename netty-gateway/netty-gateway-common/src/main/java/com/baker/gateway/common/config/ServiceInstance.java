@@ -24,7 +24,7 @@ public class ServiceInstance implements Serializable {
     /**
      * 服务定义唯一id
      */
-    protected String uniqueId;
+    protected String serviceId;
 
     /**
      * 服务实例地址： ip:port
@@ -56,10 +56,10 @@ public class ServiceInstance implements Serializable {
      */
     protected String version;
 
-    public ServiceInstance(String serviceInstanceId, String uniqueId, String address, String tags, Integer weight,
+    public ServiceInstance(String serviceInstanceId, String serviceId, String address, String tags, Integer weight,
                            long registerTime, boolean enable, String version) {
         this.serviceInstanceId = serviceInstanceId;
-        this.uniqueId = uniqueId;
+        this.serviceId = serviceId;
         this.address = address;
         this.tags = tags;
         this.weight = weight;

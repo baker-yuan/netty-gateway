@@ -89,8 +89,7 @@ public class ResponseHelper {
 			//	1: 第一步构建响应对象，并写回数据
 			FullHttpResponse httpResponse = ResponseHelper.getHttpResponse(context, (GatewayResponse)context.getResponse());
 			if(!context.isKeepAlive()) {
-				context.getNettyCtx()
-					.writeAndFlush(httpResponse).addListener(ChannelFutureListener.CLOSE);
+				context.getNettyCtx().writeAndFlush(httpResponse).addListener(ChannelFutureListener.CLOSE);
 			} 
 			//	长连接
 			else {

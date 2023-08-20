@@ -9,6 +9,7 @@ import java.util.Map;
 import com.baker.gateway.common.util.ServiceLoader;
 import com.baker.gateway.core.context.Context;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,7 +32,7 @@ public class DefaultProcessorFilterFactory extends AbstractProcessorFilterFactor
     @SuppressWarnings("unchecked")
     private DefaultProcessorFilterFactory() {
         //	SPI方式加载filter的集合 key=filterType value=filter集合
-        Map<String, List<ProcessorFilter<Context>>> filterMap = new LinkedHashMap<>();
+        Map<String, List<ProcessorFilter<Context>>> filterMap = Maps.newLinkedHashMap();
 
         //	通过ServiceLoader加载
         @SuppressWarnings("rawtypes")

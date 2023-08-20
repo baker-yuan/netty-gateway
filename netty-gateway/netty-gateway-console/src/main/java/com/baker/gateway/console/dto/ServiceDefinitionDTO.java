@@ -21,7 +21,7 @@ public class ServiceDefinitionDTO {
 	/**
 	 * 	服务唯一ID
 	 */
-	private String uniqueId;	//	serviceId:version
+	private String serviceId;	//	serviceId:version
 
     /**
      * 	访问真实ANT表达式匹配

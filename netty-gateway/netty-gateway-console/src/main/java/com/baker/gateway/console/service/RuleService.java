@@ -31,11 +31,11 @@ public class RuleService {
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		List<Rule> rules = new ArrayList<>();
 		for(Pair<String, String> pair : list) {
-			String p = pair.getObject1();
+			String p = pair.getKey();
 			if (p.equals(path)) { 
 				continue;
 			}
-			String json = pair.getObject2();
+			String json = pair.getValue();
 			Rule rule = FastJsonConvertUtil.convertJSONToObject(json, Rule.class);
 			rules.add(rule);
 		}

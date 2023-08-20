@@ -26,8 +26,8 @@ public class ServiceInstanceController {
 	 */
 	@RequestMapping("/serviceInstance/getList")
 	public List<ServiceInstance> getList(@RequestParam("prefixPath") String prefixPath,
-			@RequestParam("uniqueId")String uniqueId) throws Exception{
-        return serviceInstanceService.getServiceInstanceList(prefixPath, uniqueId);
+			@RequestParam("serviceId")String serviceId) throws Exception{
+        return serviceInstanceService.getServiceInstanceList(prefixPath, serviceId);
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class ServiceInstanceController {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateEnable(
 					serviceInstanceDTO.getPrefixPath(),
-					serviceInstanceDTO.getUniqueId(),
+					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.isEnable());
 		}
@@ -52,7 +52,7 @@ public class ServiceInstanceController {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateTags(
 					serviceInstanceDTO.getPrefixPath(),
-					serviceInstanceDTO.getUniqueId(),
+					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.getTags());
 		}
@@ -66,7 +66,7 @@ public class ServiceInstanceController {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateWeight(
 					serviceInstanceDTO.getPrefixPath(),
-					serviceInstanceDTO.getUniqueId(),
+					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.getWeight());
 		}

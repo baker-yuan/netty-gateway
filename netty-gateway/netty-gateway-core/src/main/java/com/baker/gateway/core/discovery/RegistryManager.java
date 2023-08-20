@@ -92,11 +92,8 @@ public class RegistryManager {
 		RegistryService registryService = serviceLoader.iterator().next();
 		registryService.initialized(gatewayConfig.getRegistryAddress());
 		this.registryService = registryService;
-		// for(RegistryService registryService : serviceLoader) {
-		// 	registryService.initialized(gatewayConfig.getRegistryAddress());
-		// 	this.registryService = registryService;
-		// }
-		
+
+
 		//	3. 注册监听
 		this.registryService.addWatcherListeners(superPath, new ServiceListener());
 		
@@ -113,11 +110,11 @@ public class RegistryManager {
 	 *
 	 * 	/netty-gateway-dev
 	 * 		/services
-	 * 			/hello:1.0.0
-	 * 			/say:1.0.0
+	 * 			/hello
+	 * 			/say
 	 * 		/instances
-	 * 			/hello:1.0.0/192.168.11.100:1234
-	 * 			/hello:1.0.0/192.168.11.101:4321
+	 * 			/hello/192.168.11.100:1234
+	 * 			/hello/192.168.11.101:4321
 	 */
 	private synchronized void subscribeService() {
 		log.info("#RegistryManager#subscribeService  ------------ 	服务订阅开始 	---------------");
@@ -127,8 +124,8 @@ public class RegistryManager {
 			List<Pair<String, String>> definitionList = this.registryService.getListByPrefixKey(servicesPath);
 			
 			for(Pair<String, String> definition : definitionList) {
-				String definitionPath = definition.getObject1();
-				String definitionJson = definition.getObject2();
+				String definitionPath = definition.getKey();
+				String definitionJson = definition.getValue();
 				
 				//	把当前获取的跟目录进行排除
 				if(definitionPath.equals(servicesPath)) {
@@ -136,34 +133,34 @@ public class RegistryManager {
 				}
 				
 				//	1.1 加载服务定义集合
-				String uniqueId = definitionPath.substring(servicesPath.length() + 1);
+				String serviceId = definitionPath.substring(servicesPath.length() + 1);
 				ServiceDefinition serviceDefinition = parseServiceDefinition(definitionJson);
-				DynamicConfigManager.getInstance().putServiceDefinition(uniqueId, serviceDefinition);
-				log.info("#RegistryManager#subscribeService 1.1 加载服务定义信息 uniqueId : {}, serviceDefinition : {}", 
-						uniqueId,
+				DynamicConfigManager.getInstance().putServiceDefinition(serviceId, serviceDefinition);
+				log.info("#RegistryManager#subscribeService 1.1 加载服务定义信息 serviceId : {}, serviceDefinition : {}",
+						serviceId,
 						FastJsonConvertUtil.convertObjectToJSON(serviceDefinition));
 				
 				//	1.2 加载服务实例集合
 				//	首先拼接当前服务定义的服务实例前缀路径
-				String serviceInstancePrefix = instancesPath + Registry.PATH + uniqueId;
+				String serviceInstancePrefix = instancesPath + Registry.PATH + serviceId;
 				List<Pair<String, String>> instanceList = this.registryService.getListByPrefixKey(serviceInstancePrefix);
 				Set<ServiceInstance> serviceInstanceSet = new HashSet<>();
 				for(Pair<String, String> instance : instanceList) {
-					String instanceJson = instance.getObject2();
+					String instanceJson = instance.getValue();
 					ServiceInstance serviceInstance = FastJsonConvertUtil.convertJSONToObject(instanceJson, ServiceInstance.class);
 					serviceInstanceSet.add(serviceInstance);
 				}
-				DynamicConfigManager.getInstance().addServiceInstance(uniqueId, serviceInstanceSet);
-				log.info("#RegistryManager#subscribeService 1.2 加载服务实例 uniqueId : {}, serviceDefinition : {}", 			
-						uniqueId,
+				DynamicConfigManager.getInstance().addServiceInstance(serviceId, serviceInstanceSet);
+				log.info("#RegistryManager#subscribeService 1.2 加载服务实例 serviceId : {}, serviceDefinition : {}",
+						serviceId,
 						FastJsonConvertUtil.convertObjectToJSON(serviceInstanceSet));
 			}
 			
 			//	2. 加载规则集合
 			List<Pair<String, String>> ruleList = this.registryService.getListByPrefixKey(rulesPath);
 			for(Pair<String, String> r: ruleList) {
-				String rulePath = r.getObject1();
-				String ruleJson = r.getObject2();
+				String rulePath = r.getKey();
+				String ruleJson = r.getValue();
 				if(rulePath.endsWith(rulesPath)) {
 					continue;
 				}
@@ -191,10 +188,8 @@ public class RegistryManager {
 		ServiceDefinition serviceDefinition = new ServiceDefinition();
 
 		//	填充serviceDefinition
-		serviceDefinition.setUniqueId((String)jsonMap.get("uniqueId"));
 		serviceDefinition.setServiceId((String)jsonMap.get("serviceId"));
 		serviceDefinition.setProtocol((String)jsonMap.get("protocol"));
-		serviceDefinition.setPatternPath((String)jsonMap.get("patternPath"));
 		serviceDefinition.setVersion((String)jsonMap.get("version"));
 		serviceDefinition.setEnable((boolean)jsonMap.get("enable"));
 		serviceDefinition.setEnvType((String)jsonMap.get("envType"));
@@ -242,10 +237,10 @@ public class RegistryManager {
 			
 			//	如果是服务定义发生变更
 			if(key.contains(servicesPath)) {
-				String uniqueId = key.substring(servicesPath.length() + 1);
+				String serviceId = key.substring(servicesPath.length() + 1);
 				//	ServiceDefinition
 				ServiceDefinition serviceDefinition = parseServiceDefinition(value);
-				DynamicConfigManager.getInstance().putServiceDefinition(uniqueId, serviceDefinition);
+				DynamicConfigManager.getInstance().putServiceDefinition(serviceId, serviceDefinition);
 				return;
 			}
 			//	如果是服务实例发生变更
@@ -255,9 +250,9 @@ public class RegistryManager {
 				String temp = key.substring(instancesPath.length() + 1);
 				String[] tempArray = temp.split(Registry.PATH);
 				if(tempArray.length == 2) {
-					String uniqueId = tempArray[0];
+					String serviceId = tempArray[0];
 					ServiceInstance serviceInstance = FastJsonConvertUtil.convertJSONToObject(value, ServiceInstance.class);
-					DynamicConfigManager.getInstance().updateServiceInstance(uniqueId, serviceInstance);
+					DynamicConfigManager.getInstance().updateServiceInstance(serviceId, serviceInstance);
 				}
 				return;
 			}
@@ -283,9 +278,9 @@ public class RegistryManager {
 			
 			//	如果是服务定义发生变更
 			if(key.contains(servicesPath)) {
-				String uniqueId = key.substring(servicesPath.length() + 1);
-				DynamicConfigManager.getInstance().removeServiceDefinition(uniqueId);
-				DynamicConfigManager.getInstance().removeServiceInstancesByUniqueId(uniqueId);
+				String serviceId = key.substring(servicesPath.length() + 1);
+				DynamicConfigManager.getInstance().removeServiceDefinition(serviceId);
+				DynamicConfigManager.getInstance().removeServiceInstancesByServiceId(serviceId);
 				return;
 			}
 			//	如果是服务实例发生变更
@@ -294,9 +289,9 @@ public class RegistryManager {
 				String temp = key.substring(instancesPath.length() + 1);
 				String[] tempArray = temp.split(Registry.PATH);
 				if(tempArray.length == 2) {
-					String uniqueId = tempArray[0];
+					String serviceId = tempArray[0];
 					String serviceInstanceId = tempArray[1];
-					DynamicConfigManager.getInstance().removeServiceInstance(uniqueId, serviceInstanceId);
+					DynamicConfigManager.getInstance().removeServiceInstance(serviceId, serviceInstanceId);
 				}				
 				return;
 			}

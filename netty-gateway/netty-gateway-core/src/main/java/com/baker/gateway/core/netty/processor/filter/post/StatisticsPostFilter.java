@@ -126,8 +126,8 @@ public class StatisticsPostFilter extends AbstractEntryProcessorFilter<Statistic
 			while(isRunning) {
 				try {
 					Pair<String, Long> pair = metricQueue.take();
-					String key = pair.getObject1();
-					Long value = pair.getObject2();
+					String key = pair.getKey();
+					Long value = pair.getValue();
 					
 					// report 上报
 					Plugin plugin = PluginManager.getPlugin().getPlugin(MetricKafkaClientPlugin.class.getName());

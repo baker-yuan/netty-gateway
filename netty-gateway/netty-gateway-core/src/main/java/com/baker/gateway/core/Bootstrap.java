@@ -22,7 +22,7 @@ public class Bootstrap {
 		try {
 			RegistryManager.getInstance().initialized(gatewayConfig);
 		} catch (Exception e) {
-			log.error("RegistryManager is failed", e);
+			log.error("#Bootstrap# RegistryManager is failed", e);
 		}
 
 		//	4. 启动容器

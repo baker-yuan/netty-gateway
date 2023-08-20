@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,7 +24,7 @@ public class PluginManager {
     private PluginManager() {
         //	SPI方式扫描所有插件实现
         ServiceLoader<Plugin> plugins = ServiceLoader.load(Plugin.class);
-        Map<String, Plugin> multiplePlugins = new HashMap<>();
+        Map<String, Plugin> multiplePlugins = Maps.newHashMap();
         for (Plugin plugin : plugins) {
             if (!plugin.check()) {
             	continue;
@@ -34,6 +35,7 @@ public class PluginManager {
         }
         //	安全执行插件逻辑
         this.multiplePlugin = new MultiplePluginImpl(multiplePlugins);
+
         Runtime.getRuntime().addShutdownHook(new Thread(multiplePlugin::destroy, "Shutdown-Plugin"));
     }
 

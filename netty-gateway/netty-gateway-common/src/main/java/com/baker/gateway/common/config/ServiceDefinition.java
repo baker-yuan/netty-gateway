@@ -17,16 +17,16 @@ import java.util.Objects;
 public class ServiceDefinition implements Serializable {
 
 	private static final long serialVersionUID = -8263365765897285189L;
-	
-	/**
-	 * 服务ID(唯一) serviceId:version
-	 */
-	private String uniqueId;
-	
+
 	/**
 	 * 服务唯一id
 	 */
 	private String serviceId;
+
+	/**
+	 * 服务URL前缀，全局唯一
+	 */
+	private String basePath;
 	
 	/**
 	 * 服务的版本号
@@ -37,12 +37,7 @@ public class ServiceDefinition implements Serializable {
 	 * 服务的具体协议 http、dubbo、grpc
 	 */
 	private String protocol;
-	
-	/**
-	 * 路径匹配规则，访问真实ANT表达式，定义具体的服务路径的匹配规则
-	 */
-	private String patternPath;
-	
+
 	/**
 	 * 环境名称
 	 */
@@ -60,13 +55,11 @@ public class ServiceDefinition implements Serializable {
 
 
 
-	public ServiceDefinition(String uniqueId, String serviceId, String version, String protocol, String patternPath,
+	public ServiceDefinition(String serviceId, String version, String protocol,
 			String envType, boolean enable, Map<String, ServiceInvoker> invokerMap) {
-		this.uniqueId = uniqueId;
 		this.serviceId = serviceId;
 		this.version = version;
 		this.protocol = protocol;
-		this.patternPath = patternPath;
 		this.envType = envType;
 		this.enable = enable;
 		this.invokerMap = invokerMap;

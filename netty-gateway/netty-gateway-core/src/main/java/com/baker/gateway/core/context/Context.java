@@ -13,7 +13,7 @@ public interface Context {
 
     // 一个请求正在执行过程中
     int RUNNING = -1;
-    // 	写回响应标记，标记当前Context/请求需要写回
+    // 	写回响应标记，标记当前Context/请求需要写回，fireNext检测到该状态了，就执行ctx.writeAndFlush(response)，将状态流转为COMPLETED
     int WRITTEN = 0;
     // 当写回成功后，设置该标记 ctx.writeAndFlush(response)
     int COMPLETED = 1;

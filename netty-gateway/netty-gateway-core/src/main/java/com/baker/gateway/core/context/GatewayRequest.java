@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.asynchttpclient.Request;
 import org.asynchttpclient.RequestBuilder;
@@ -35,11 +36,11 @@ import lombok.extern.slf4j.Slf4j;
 public class GatewayRequest implements GatewayRequestMutable {
 
 	/**
-	 * FullHttpRequest，在header里面必须要有该属性，
-	 * uniqueId表示服务的唯一性ID，格式为 serviceId:version
+	 * 服务Id
 	 */
 	@Getter
-	private final String uniqueId;
+	@Setter
+	private String serviceId;
 
 	/**
 	 * 一次请求进入网关的开始时间戳
@@ -147,11 +148,10 @@ public class GatewayRequest implements GatewayRequestMutable {
 	private final RequestBuilder requestBuilder;
 
 
-	public GatewayRequest(String uniqueId, Charset charset, String clientIp, String host,
+	public GatewayRequest(Charset charset, String clientIp, String host,
 						  String uri, HttpMethod method, String contentType, HttpHeaders headers,
 						  FullHttpRequest fullHttpRequest) {
 		// 不可修改参数
-		this.uniqueId = uniqueId;
 		this.beginTime = TimeUtil.currentTimeMillis();
 		this.charset = charset;
 		this.clientIp = clientIp;

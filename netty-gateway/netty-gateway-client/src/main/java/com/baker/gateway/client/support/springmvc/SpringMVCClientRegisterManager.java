@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SpringMVCClientRegisterManager extends AbstractClientRegisterManager implements ApplicationListener<ApplicationEvent>, ApplicationContextAware  {
 
-	ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
 
 	@Autowired
 	private ServerProperties serverProperties;
@@ -117,11 +117,11 @@ public class SpringMVCClientRegisterManager extends AbstractClientRegisterManage
 						int port = serverProperties.getPort();
 						String serviceInstanceId = localIp + BasicConst.COLON_SEPARATOR + port;
 						String address = serviceInstanceId;
-						String uniqueId = serviceDefinition.getUniqueId();
+						String serviceId = serviceDefinition.getServiceId();
 						String version = serviceDefinition.getVersion();
 						
 						serviceInstance.setServiceInstanceId(serviceInstanceId);
-						serviceInstance.setUniqueId(uniqueId);
+						serviceInstance.setServiceId(serviceId);
 						serviceInstance.setAddress(address);
 						serviceInstance.setWeight(GatewayConst.DEFAULT_WEIGHT);
 						serviceInstance.setRegisterTime(TimeUtil.currentTimeMillis());

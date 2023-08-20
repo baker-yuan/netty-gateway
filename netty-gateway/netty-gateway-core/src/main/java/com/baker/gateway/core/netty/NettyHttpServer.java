@@ -40,11 +40,12 @@ public class NettyHttpServer implements LifeCycle {
 	private int port = 8888;
 	
 	private ServerBootstrap serverBootstrap;
-	
 	private EventLoopGroup eventLoopGroupBoss;
-
 	private EventLoopGroup eventLoopGroupWork;
-	
+
+	/**
+	 * 处理Netty核心逻辑的执行器接口定义
+	 */
 	private NettyProcessor nettyProcessor;
 	
 	public NettyHttpServer(GatewayConfig gatewayConfig, NettyProcessor nettyProcessor) {

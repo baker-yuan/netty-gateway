@@ -14,15 +14,15 @@ public class DubboConnectException extends GatewayConnectException {
     @Getter
     private final String methodName;
 
-    public DubboConnectException(String uniqueId, String requestUrl, String interfaceName, String methodName) {
-        super(uniqueId, requestUrl);
+    public DubboConnectException(String serviceId, String requestUrl, String interfaceName, String methodName) {
+        super(serviceId, requestUrl);
         this.interfaceName = interfaceName;
         this.methodName = methodName;
     }
 
-    public DubboConnectException(Throwable cause, String uniqueId, String requestUrl, 
+    public DubboConnectException(Throwable cause, String serviceId, String requestUrl,
     		String interfaceName, String methodName, ResponseCode code) {
-        super(cause, uniqueId, requestUrl, code);
+        super(cause, serviceId, requestUrl, code);
         this.interfaceName = interfaceName;
         this.methodName = methodName;
     }

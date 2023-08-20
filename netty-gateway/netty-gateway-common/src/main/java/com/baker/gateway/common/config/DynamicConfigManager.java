@@ -1,6 +1,9 @@
 package com.baker.gateway.common.config;
 
+import com.baker.gateway.common.util.Pair;
+
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,12 +13,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DynamicConfigManager {
 
     /**
-     * 服务的定义集合 key=uniqueId(服务的唯一标识) value=资源服务定义
+     * 服务的定义集合 key=serviceId(服务的唯一标识) value=资源服务定义
      */
     private final ConcurrentHashMap<String, ServiceDefinition> serviceDefinitionMap = new ConcurrentHashMap<>();
 
     /**
-     * 服务的实例集合 key=uniqueId value=服务实例集合
+     * 所有的服务方法信息 key=invokerPath(完整路径) value=服务调用的接口模型描述
+     */
+    private final ConcurrentHashMap<String, Pair<ServiceInvoker, ServiceDefinition>> allServiceInvokerMap = new ConcurrentHashMap<>();
+
+
+    /**
+     * 服务的实例集合 key=serviceId value=服务实例集合
      */
     private final ConcurrentHashMap<String, Set<ServiceInstance>> serviceInstanceMap = new ConcurrentHashMap<>();
 
@@ -40,16 +49,23 @@ public class DynamicConfigManager {
     /***************** 	对服务定义缓存进行操作的系列方法 	***************/
 
 
-    public void putServiceDefinition(String uniqueId, ServiceDefinition serviceDefinition) {
-        serviceDefinitionMap.put(uniqueId, serviceDefinition);
+    public void putServiceDefinition(String serviceId, ServiceDefinition serviceDefinition) {
+        serviceDefinitionMap.put(serviceId, serviceDefinition);
+        for (Map.Entry<String, ServiceInvoker> entry : serviceDefinition.getInvokerMap().entrySet()) {
+            allServiceInvokerMap.put(entry.getKey(), new Pair<>(entry.getValue(), serviceDefinition));
+        }
+
     }
 
-    public ServiceDefinition getServiceDefinition(String uniqueId) {
-        return serviceDefinitionMap.get(uniqueId);
+    public ServiceDefinition getServiceDefinition(String serviceId) {
+        return serviceDefinitionMap.get(serviceId);
     }
 
-    public void removeServiceDefinition(String uniqueId) {
-        serviceDefinitionMap.remove(uniqueId);
+    public void removeServiceDefinition(String serviceId) {
+        ServiceDefinition delete = serviceDefinitionMap.remove(serviceId);
+        for (String key : delete.getInvokerMap().keySet()) {
+            allServiceInvokerMap.remove(key);
+        }
     }
 
     public ConcurrentHashMap<String, ServiceDefinition> getServiceDefinitionMap() {
@@ -57,23 +73,28 @@ public class DynamicConfigManager {
     }
 
 
-    /***************** 	对服务实例缓存进行操作的系列方法 	***************/
-
-    public Set<ServiceInstance> getServiceInstanceByUniqueId(String uniqueId) {
-        return serviceInstanceMap.get(uniqueId);
+    public Pair<ServiceInvoker, ServiceDefinition> getServiceInvokerMapMap(String invokerPath) {
+        return allServiceInvokerMap.get(invokerPath);
     }
 
-    public void addServiceInstance(String uniqueId, ServiceInstance serviceInstance) {
-        Set<ServiceInstance> set = serviceInstanceMap.get(uniqueId);
+
+    /***************** 	对服务实例缓存进行操作的系列方法 	***************/
+
+    public Set<ServiceInstance> getServiceInstanceByServiceId(String serviceId) {
+        return serviceInstanceMap.get(serviceId);
+    }
+
+    public void addServiceInstance(String serviceId, ServiceInstance serviceInstance) {
+        Set<ServiceInstance> set = serviceInstanceMap.get(serviceId);
         set.add(serviceInstance);
     }
 
-    public void addServiceInstance(String uniqueId, Set<ServiceInstance> serviceInstanceSet) {
-        serviceInstanceMap.put(uniqueId, serviceInstanceSet);
+    public void addServiceInstance(String serviceId, Set<ServiceInstance> serviceInstanceSet) {
+        serviceInstanceMap.put(serviceId, serviceInstanceSet);
     }
 
-    public void updateServiceInstance(String uniqueId, ServiceInstance serviceInstance) {
-        Set<ServiceInstance> set = serviceInstanceMap.get(uniqueId);
+    public void updateServiceInstance(String serviceId, ServiceInstance serviceInstance) {
+        Set<ServiceInstance> set = serviceInstanceMap.get(serviceId);
         Iterator<ServiceInstance> it = set.iterator();
         while (it.hasNext()) {
             ServiceInstance is = it.next();
@@ -85,8 +106,8 @@ public class DynamicConfigManager {
         set.add(serviceInstance);
     }
 
-    public void removeServiceInstance(String uniqueId, String serviceInstanceId) {
-        Set<ServiceInstance> set = serviceInstanceMap.get(uniqueId);
+    public void removeServiceInstance(String serviceId, String serviceInstanceId) {
+        Set<ServiceInstance> set = serviceInstanceMap.get(serviceId);
         Iterator<ServiceInstance> it = set.iterator();
         while (it.hasNext()) {
             ServiceInstance is = it.next();
@@ -97,8 +118,8 @@ public class DynamicConfigManager {
         }
     }
 
-    public void removeServiceInstancesByUniqueId(String uniqueId) {
-        serviceInstanceMap.remove(uniqueId);
+    public void removeServiceInstancesByServiceId(String serviceId) {
+        serviceInstanceMap.remove(serviceId);
     }
 
 

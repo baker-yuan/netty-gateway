@@ -10,9 +10,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MultiplePluginImpl implements Plugin {
-	
+
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
+    /**
+     * 插件 key=插件名称 value=插件
+     */
     private final Map<String, Plugin> plugins;
 
     public MultiplePluginImpl(Map<String, Plugin> plugins) {

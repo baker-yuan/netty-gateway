@@ -29,27 +29,27 @@ public class ServiceDefinitionController {
 	}
 	
 	/**
-	 * 根据uniqueId更新服务定义PatternPath信息
+	 * 根据serviceId更新服务定义PatternPath信息
 	 */
-	@RequestMapping("/serviceDefinition/updatePatternPathByUniqueId")
-	public void updatePatternPathByUniqueId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
+	@RequestMapping("/serviceDefinition/updatePatternPathByServiceId")
+	public void updatePatternPathByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
 		if(serviceDefinitionDTO != null && serviceDefinitionDTO.getPatternPath()!= null) {
-			serviceDefinitionService.updatePatternPathByUniqueId(
+			serviceDefinitionService.updatePatternPathByServiceId(
 					serviceDefinitionDTO.getPrefixPath(),
-					serviceDefinitionDTO.getUniqueId(),
+					serviceDefinitionDTO.getServiceId(),
 					serviceDefinitionDTO.getPatternPath());			
 		}
 	}
 	
 	/**
-	 * 根据uniqueId更新服务定义PatternPath信息
+	 * 根据serviceId更新服务定义PatternPath信息
 	 */
-	@RequestMapping("/serviceDefinition/updateEnableByUniqueId")
-	public void updateEnableByUniqueId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
+	@RequestMapping("/serviceDefinition/updateEnableByServiceId")
+	public void updateEnableByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
 		if(serviceDefinitionDTO != null) {
-			serviceDefinitionService.updateEnableByUniqueId(
+			serviceDefinitionService.updateEnableByServiceId(
 					serviceDefinitionDTO.getPrefixPath(),
-					serviceDefinitionDTO.getUniqueId(),
+					serviceDefinitionDTO.getServiceId(),
 					serviceDefinitionDTO.isEnable());			
 		}
 	}

@@ -119,10 +119,10 @@ public class GatewayContext extends BasicContext {
     }
 
     /**
-     * 获取上下文中唯一的UniqueId
+     * 获取服务Id
      */
-    public String getUniqueId() {
-        return gatewayRequest.getUniqueId();
+    public String getServiceId() {
+        return gatewayRequest.getServiceId();
     }
 
     /**

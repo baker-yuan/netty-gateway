@@ -33,6 +33,5 @@
 	"patternPath": "/say*/**",
 	"protocol": "dubbo",
 	"serviceId": "say",
-	"uniqueId": "say:1.0.0",
 	"version": "1.0.0"
 }

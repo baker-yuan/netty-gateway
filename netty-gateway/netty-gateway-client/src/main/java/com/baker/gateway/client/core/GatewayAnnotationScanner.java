@@ -52,7 +52,7 @@ public class GatewayAnnotationScanner {
         GatewayService gatewayService = clazz.getAnnotation(GatewayService.class);
         String serviceId = gatewayService.serviceId();
         GatewayProtocol protocol = gatewayService.protocol();
-        String patternPath = gatewayService.patternPath();
+        String basePath = gatewayService.basePath();
         String version = gatewayService.version();
 
         ServiceDefinition serviceDefinition = new ServiceDefinition();
@@ -65,6 +65,10 @@ public class GatewayAnnotationScanner {
                 continue;
             }
             String path = gatewayInvoker.path();
+
+            if (!path.startsWith(basePath)) {
+                throw new IllegalArgumentException(String.format("url冲突，%s.%s GatewayInvoker#path 必须以 %s 开头", clazz.getName(), method.getName(), basePath));
+            }
 
             switch (protocol) {
                 case HTTP:
@@ -86,11 +90,10 @@ public class GatewayAnnotationScanner {
             }
         }
         //	设置属性
-        serviceDefinition.setUniqueId(serviceId + BasicConst.COLON_SEPARATOR + version);
         serviceDefinition.setServiceId(serviceId);
         serviceDefinition.setVersion(version);
         serviceDefinition.setProtocol(protocol.getCode());
-        serviceDefinition.setPatternPath(patternPath);
+        serviceDefinition.setBasePath(basePath);
         serviceDefinition.setEnable(true);
         serviceDefinition.setInvokerMap(invokerMap);
         return serviceDefinition;

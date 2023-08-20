@@ -30,45 +30,40 @@ public class ServiceDefinitionService {
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		List<ServiceDefinition> serviceDefinitions = new ArrayList<>();
 		for(Pair<String, String> pair : list) {
-			String p = pair.getObject1();
+			String p = pair.getKey();
 			if (p.equals(path)) { 
 				continue;
 			}
-			String json = pair.getObject2();
+			String json = pair.getValue();
 			ServiceDefinition sd = FastJsonConvertUtil.convertJSONToObject(json, ServiceDefinition.class);
 			serviceDefinitions.add(sd);
 		}
 		return serviceDefinitions;
 	}
 	
-	public void updatePatternPathByUniqueId(String prefixPath, String uniqueId, String patternPath) throws Exception {
-		updateServiceDefinitionByUniqueId(prefixPath, uniqueId, false);
+	public void updatePatternPathByServiceId(String prefixPath, String serviceId, String patternPath) throws Exception {
+		updateServiceDefinitionByServiceId(prefixPath, serviceId, false);
 	}
 	
-	public void updateEnableByUniqueId(String prefixPath, String uniqueId, boolean enable) throws Exception {
-		updateServiceDefinitionByUniqueId(prefixPath, uniqueId, enable);
+	public void updateEnableByServiceId(String prefixPath, String serviceId, boolean enable) throws Exception {
+		updateServiceDefinitionByServiceId(prefixPath, serviceId, enable);
 	}
 
 	/**
 	 * 根据服务唯一ID 更新patternPath enable
 	 */
-	private void updateServiceDefinitionByUniqueId(String prefixPath, String uniqueId, Object param) throws Exception {
+	private void updateServiceDefinitionByServiceId(String prefixPath, String serviceId, Object param) throws Exception {
 		String path = RegistryService.PATH 
 				+ prefixPath 
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
-				+ uniqueId;
+				+ serviceId;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		if(list.size() == 1) {
 			Pair<String, String> pair = list.get(0);
-			String key = pair.getObject1();
-			String json = pair.getObject2();
+			String key = pair.getKey();
+			String json = pair.getValue();
 			ServiceDefinition sd = FastJsonConvertUtil.convertJSONToObject(json, ServiceDefinition.class);
-			//	update:  patternPath & enable
-			if(param instanceof String) {
-				String patternPath = (String)param;
-				sd.setPatternPath(patternPath);
-			}
 			if(param instanceof Boolean) {
 				boolean enable = (boolean)param;
 				sd.setEnable(enable);
@@ -79,19 +74,19 @@ public class ServiceDefinitionService {
 	}
 
 	/**
-	 * 根据uniqueId获取指定的服务下的调用方法列表
+	 * 根据serviceId获取指定的服务下的调用方法列表
 	 */
-	public List<ServiceInvoker> getServiceInvokerByUniqueId(String prefixPath, String uniqueId) throws Exception {
+	public List<ServiceInvoker> getServiceInvokerByServiceId(String prefixPath, String serviceId) throws Exception {
 		String path = RegistryService.PATH 
 				+ prefixPath 
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
-				+ uniqueId;
+				+ serviceId;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		List<ServiceInvoker> invokerList = new ArrayList<>();
 		if(list.size() == 1) {
 			Pair<String, String> pair = list.get(0);
-			String json = pair.getObject2();
+			String json = pair.getValue();
 			ServiceDefinition sd = FastJsonConvertUtil.convertJSONToObject(json, ServiceDefinition.class);
 			Map<String, ServiceInvoker> map = sd.getInvokerMap();
 			invokerList.addAll(map.values());
@@ -102,17 +97,17 @@ public class ServiceDefinitionService {
 	/**
 	 * 为ServiceInvoker绑定一个规则ID
 	 */
-	public void serviceInvokerBindingRuleId(String prefixPath, String uniqueId, String invokerPath, String ruleId) throws Exception {
+	public void serviceInvokerBindingRuleId(String prefixPath, String serviceId, String invokerPath, String ruleId) throws Exception {
 		String path = RegistryService.PATH 
 				+ prefixPath 
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
-				+ uniqueId;
+				+ serviceId;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		if(list.size() == 1) {
 			Pair<String, String> pair = list.get(0);
-			String key = pair.getObject1();
-			String json = pair.getObject2();
+			String key = pair.getKey();
+			String json = pair.getValue();
 			ServiceDefinition sd = FastJsonConvertUtil.convertJSONToObject(json, ServiceDefinition.class);
 			Map<String, ServiceInvoker> map = sd.getInvokerMap();
 			for(Map.Entry<String, ServiceInvoker> entry : map.entrySet()) {

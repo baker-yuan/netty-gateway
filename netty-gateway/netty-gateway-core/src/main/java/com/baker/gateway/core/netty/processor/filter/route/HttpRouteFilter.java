@@ -89,7 +89,7 @@ public class HttpRouteFilter extends AbstractEntryProcessorFilter<FilterConfig> 
                 //	其他异常情况
                 else {
                     context.setThrowable(new GatewayConnectException(throwable,
-                            context.getUniqueId(),
+                            context.getServiceId(),
                             url,
                             ResponseCode.HTTP_RESPONSE_ERROR));
                 }

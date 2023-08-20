@@ -21,34 +21,34 @@ public class ServiceInvokerController {
 	private ServiceDefinitionService serviceDefinitionService;
 
 	/**
-	 * 根据uniqueId获取指定的服务下的调用方法列表
+	 * 根据serviceId获取指定的服务下的调用方法列表
 	 *
 	 * @param prefixPath
-	 * @param uniqueId
+	 * @param serviceId
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/serviceInvoker/getListByUniqueId")
-	public List<ServiceInvoker> getListByUniqueId(@RequestParam("prefixPath")String prefixPath, 
-			@RequestParam("uniqueId")String uniqueId) throws Exception{
-        return serviceDefinitionService.getServiceInvokerByUniqueId(prefixPath, uniqueId);
+	@RequestMapping("/serviceInvoker/getListByServiceId")
+	public List<ServiceInvoker> getListByServiceId(@RequestParam("prefixPath")String prefixPath,
+												   @RequestParam("serviceId")String serviceId) throws Exception{
+        return serviceDefinitionService.getServiceInvokerByServiceId(prefixPath, serviceId);
 	}
 
 	/**
 	 * 为ServiceInvoker绑定一个规则ID
 	 *
 	 * @param prefixPath
-	 * @param uniqueId
+	 * @param serviceId
 	 * @param invokerPath
 	 * @param ruleId
 	 * @throws Exception
 	 */
 	@RequestMapping("/serviceInvoker/bindingRuleId")
 	public void bindingRuleId(@RequestParam("prefixPath")String prefixPath, 
-			@RequestParam("uniqueId")String uniqueId,
+			@RequestParam("serviceId")String serviceId,
 			@RequestParam("invokerPath")String invokerPath,
 			@RequestParam("ruleId")String ruleId) throws Exception {
-		serviceDefinitionService.serviceInvokerBindingRuleId(prefixPath, uniqueId, invokerPath, ruleId);
+		serviceDefinitionService.serviceInvokerBindingRuleId(prefixPath, serviceId, invokerPath, ruleId);
 	}
 	
 }

@@ -106,7 +106,7 @@ public class DubboReferenceHelper {
         	
              return completableFuture;
         } catch (Exception e) {
-            throw new DubboConnectException(e, gatewayContext.getUniqueId(),
+            throw new DubboConnectException(e, gatewayContext.getServiceId(),
             		gatewayContext.getOriginRequest().getPath(),
                     dubboRequest.getInterfaceClass(),
                     dubboRequest.getMethodName(),

@@ -20,7 +20,7 @@ public class ServiceInstanceService {
 	/**
 	 * 根据服务唯一标识获取实例列表
 	 */
-	public List<ServiceInstance> getServiceInstanceList(String prefixPath, String uniqueId) throws Exception {
+	public List<ServiceInstance> getServiceInstanceList(String prefixPath, String serviceId) throws Exception {
 		/**
 		 * 		/netty-gateway-env
 		 * 			/services
@@ -39,17 +39,17 @@ public class ServiceInstanceService {
 				+ prefixPath 
 				+ RegistryService.INSTANCE_PREFIX
 				+ RegistryService.PATH 
-				+ uniqueId;
+				+ serviceId;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		
-		List<ServiceInstance> serviceInstances = new ArrayList<ServiceInstance>();
+		List<ServiceInstance> serviceInstances = new ArrayList<>();
 
 		for(Pair<String, String> pair : list) {
 			// String p = pair.getObject1();
 			// if (p.equals(path)) {
 			// 	continue;
 			// }
-			String json = pair.getObject2();
+			String json = pair.getValue();
 			ServiceInstance si = FastJsonConvertUtil.convertJSONToObject(json, ServiceInstance.class);
 			serviceInstances.add(si);
 		}
@@ -57,35 +57,35 @@ public class ServiceInstanceService {
 		return serviceInstances;
 	}
 	
-	public void updateEnable(String prefixPath, String uniqueId, String serviceInstanceId, boolean enable) throws Exception {
-		updateServiceInstance(prefixPath, uniqueId, serviceInstanceId, enable);
+	public void updateEnable(String prefixPath, String serviceId, String serviceInstanceId, boolean enable) throws Exception {
+		updateServiceInstance(prefixPath, serviceId, serviceInstanceId, enable);
 	}
 	
-	public void updateTags(String prefixPath, String uniqueId, String serviceInstanceId, String tags) throws Exception {
-		updateServiceInstance(prefixPath, uniqueId, serviceInstanceId, tags);
+	public void updateTags(String prefixPath, String serviceId, String serviceInstanceId, String tags) throws Exception {
+		updateServiceInstance(prefixPath, serviceId, serviceInstanceId, tags);
 	}
 	
-	public void updateWeight(String prefixPath, String uniqueId, String serviceInstanceId, int weight) throws Exception {
-		updateServiceInstance(prefixPath, uniqueId, serviceInstanceId, weight);
+	public void updateWeight(String prefixPath, String serviceId, String serviceInstanceId, int weight) throws Exception {
+		updateServiceInstance(prefixPath, serviceId, serviceInstanceId, weight);
 	}
 
 	/**
 	 * 启用禁用某个服务实例
 	 */
-	private void updateServiceInstance(String prefixPath, String uniqueId, String serviceInstanceId, Object param) throws Exception {
+	private void updateServiceInstance(String prefixPath, String serviceId, String serviceInstanceId, Object param) throws Exception {
 		String path = RegistryService.PATH 
 				+ prefixPath 
 				+ RegistryService.INSTANCE_PREFIX
 				+ RegistryService.PATH 
-				+ uniqueId;
+				+ serviceId;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 
 		for(Pair<String, String> pair : list) {
-			String p = pair.getObject1();
+			String p = pair.getKey();
 			if (p.equals(path)) { 
 				continue;
 			}
-			String json = pair.getObject2();
+			String json = pair.getValue();
 			ServiceInstance si = FastJsonConvertUtil.convertJSONToObject(json, ServiceInstance.class);
 			//	更新启用禁用
 			if((si.getServiceInstanceId()).equals(serviceInstanceId)) {

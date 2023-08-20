@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.baker.gateway.common.util.Pair;
 import com.baker.gateway.core.context.AttributeKey;
 import com.baker.gateway.core.context.GatewayContext;
 import com.baker.gateway.core.context.GatewayRequest;
@@ -17,12 +18,9 @@ import com.baker.gateway.common.config.Rule;
 import com.baker.gateway.common.config.ServiceDefinition;
 import com.baker.gateway.common.config.ServiceInvoker;
 import com.baker.gateway.common.constants.BasicConst;
-import com.baker.gateway.common.constants.GatewayConst;
 import com.baker.gateway.common.constants.GatewayProtocol;
 import com.baker.gateway.common.enums.ResponseCode;
 import com.baker.gateway.common.exception.GatewayNotFoundException;
-import com.baker.gateway.common.exception.GatewayPathNoMatchedException;
-import com.baker.gateway.common.exception.GatewayResponseException;
 import com.baker.gateway.common.util.AntPathMatcher;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -43,20 +41,18 @@ public class RequestHelper {
 	 * 解析FullHttpRequest 构建GatewayContext核心构建方法
 	 */
 	public static GatewayContext doContext(FullHttpRequest request, ChannelHandlerContext ctx) {
-		
+
 		//	1. 构建请求对象GatewayRequest
 		GatewayRequest gatewayRequest = doRequest(request, ctx);
 		
-		//	2. 根据请求对象里的uniqueId，获取资源服务信息(也就是服务定义信息)
-		ServiceDefinition serviceDefinition = getServiceDefinition(gatewayRequest);
-		
-		//	3. 快速路径匹配失败的策略
-		if(!ANT_PATH_MATCHER.match(serviceDefinition.getPatternPath(), gatewayRequest.getPath())) {
-			throw new GatewayPathNoMatchedException();
-		}
-		
+		//	2. 根据请求对象里的serviceId，获取资源服务信息(也就是服务定义信息)
+		Pair<ServiceInvoker, ServiceDefinition> pair = getServiceDefinition(gatewayRequest);
+		ServiceDefinition serviceDefinition = pair.getValue();
+		gatewayRequest.setServiceId(serviceDefinition.getServiceId());
+
+
 		//	4. 根据请求对象获取服务定义对应的方法调用，然后获取对应的规则
-		ServiceInvoker serviceInvoker = getServiceInvoker(gatewayRequest, serviceDefinition);
+		ServiceInvoker serviceInvoker = pair.getKey();
 		String ruleId = serviceInvoker.getRuleId();
 		Rule rule = DynamicConfigManager.getInstance().getRule(ruleId);
 		
@@ -84,12 +80,6 @@ public class RequestHelper {
 	private static GatewayRequest doRequest(FullHttpRequest fullHttpRequest, ChannelHandlerContext ctx) {
 		HttpHeaders headers = fullHttpRequest.headers();
 
-		// 从header头获取必须要传入的关键属性 uniqueId
-		String uniqueId = headers.get(GatewayConst.UNIQUE_ID);
-		if(StringUtils.isBlank(uniqueId)) {
-			throw new GatewayResponseException(ResponseCode.REQUEST_PARSE_ERROR_NO_UNIQUEID);
-		}
-		
 		String host = headers.get(HttpHeaderNames.HOST);
 		HttpMethod method = fullHttpRequest.method();
 		String uri = fullHttpRequest.uri();
@@ -97,8 +87,7 @@ public class RequestHelper {
 		String contentType = HttpUtil.getMimeType(fullHttpRequest) == null ? null : HttpUtil.getMimeType(fullHttpRequest).toString();
 		Charset charset = HttpUtil.getCharset(fullHttpRequest, StandardCharsets.UTF_8);
 
-		GatewayRequest gatewayRequest = new GatewayRequest(uniqueId,
-				charset,
+		GatewayRequest gatewayRequest = new GatewayRequest(charset,
 				clientIp,
 				host,
 				uri,
@@ -132,9 +121,9 @@ public class RequestHelper {
 	/**
 	 * 通过请求对象获取服务资源信息
 	 */
-	private static ServiceDefinition getServiceDefinition(GatewayRequest gatewayRequest) {
+	private static Pair<ServiceInvoker, ServiceDefinition> getServiceDefinition(GatewayRequest gatewayRequest) {
 		//	ServiceDefinition就是在网关服务初始化的时候(加载的时候)，从缓存信息里获取
-		ServiceDefinition serviceDefinition = DynamicConfigManager.getInstance().getServiceDefinition(gatewayRequest.getUniqueId());
+		Pair<ServiceInvoker, ServiceDefinition> serviceDefinition = DynamicConfigManager.getInstance().getServiceInvokerMapMap(gatewayRequest.getPath());
 		//	做异常情况判断
 		if(serviceDefinition == null) {
 			throw new GatewayNotFoundException(ResponseCode.SERVICE_DEFINITION_NOT_FOUND);

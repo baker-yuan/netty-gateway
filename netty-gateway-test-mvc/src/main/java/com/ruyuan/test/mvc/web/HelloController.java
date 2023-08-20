@@ -14,30 +14,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruyuan.test.mvc.entity.TestEntity;
 
 @RestController
-@GatewayService(patternPath = "/test*", protocol = GatewayProtocol.HTTP, serviceId = "hello")
+@GatewayService(basePath = "/testMvc", protocol = GatewayProtocol.HTTP, serviceId = "hello")
 public class HelloController {
 
 	private volatile int count;
 	
-	@GatewayInvoker(path = "/testGet")
-    @GetMapping("/testGet")
+	@GatewayInvoker(path = "/testMvc/testGet")
+    @GetMapping("/testMvc/testGet")
     public String testGet() {
         return "testGet";
     }
     
-	@GatewayInvoker(path = "/testPost")
-    @PostMapping("/testPost")
+	@GatewayInvoker(path = "/testMvc/testPost")
+    @PostMapping("/testMvc/testPost")
     public String testPost() {
 		count++;
 		if(count >= 1e5) {
-			System.err.println("<------ ruyuan: ------>");
+			System.err.println("<------ baker: ------>");
 			count = 0;
 		}        
-		return "ruyuan";
+		return "baker";
     }
     
-	@GatewayInvoker(path = "/testParam")
-    @RequestMapping("/testParam")
+	@GatewayInvoker(path = "/testMvc/testParam")
+    @RequestMapping("/testMvc/testParam")
     public String testParam(@RequestParam String name) {
 		count++;
 		if(count >= 1e5) {
@@ -47,8 +47,8 @@ public class HelloController {
     	return name;
     }
     
-	@GatewayInvoker(path = "/testEntity")
-    @RequestMapping("/testEntity")
+	@GatewayInvoker(path = "/testMvc/testEntity")
+    @RequestMapping("/testMvc/testEntity")
     public String testEntity(@RequestBody TestEntity testEntity) {
         String result = "testEntity result :" + testEntity.getName() + testEntity.getAge();
         return result;

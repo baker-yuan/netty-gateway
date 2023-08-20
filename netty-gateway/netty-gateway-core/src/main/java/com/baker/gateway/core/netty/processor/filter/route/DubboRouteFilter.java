@@ -107,7 +107,7 @@ public class DubboRouteFilter extends AbstractEntryProcessorFilter<FilterConfig>
 
             if (Objects.nonNull(throwable)) {
                 DubboConnectException dubboConnectException = new DubboConnectException(throwable,
-                        gatewayContext.getUniqueId(),
+                        gatewayContext.getServiceId(),
                         gatewayContext.getOriginRequest().getPath(),
                         dubboServiceInvoker.getInterfaceClass(),
                         dubboServiceInvoker.getMethodName(),

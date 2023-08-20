@@ -19,7 +19,8 @@ public abstract class AbstractLinkedProcessorFilter<T> implements ProcessorFilte
 		if(ctx.isTerminated()) {
 			return;
 		}
-		// 写回响应标记，标记当前Context/请求需要写回
+
+		// 写回响应标记，标记当前Context/请求需要写回，执行ctx.writeAndFlush(response)，将状态流转为COMPLETED
 		if(ctx.isWrittened()) {
 			ResponseHelper.writeResponse(ctx);
 		}

@@ -62,7 +62,7 @@ public class DubboLoadBalance implements org.apache.dubbo.rpc.cluster.LoadBalanc
 			this.invoker = invoker;
 			this.setServiceInstanceId(invoker.getUrl().getAddress());
 			this.setAddress(invoker.getUrl().getAddress());
-			this.setUniqueId(invoker.getUrl().getServiceKey());
+			this.setServiceId(invoker.getUrl().getServiceKey());
 			this.setRegisterTime(invoker.getUrl().getParameter(CommonConstants.TIMESTAMP_KEY, 0L));
 			this.setWeight(invoker.getUrl().getMethodParameter(invocation.getMethodName(),
 					Constants.WEIGHT_KEY, Constants.DEFAULT_WEIGHT));

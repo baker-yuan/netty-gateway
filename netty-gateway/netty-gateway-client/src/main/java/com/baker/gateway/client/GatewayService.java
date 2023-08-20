@@ -30,8 +30,8 @@ public @interface GatewayService {
 	GatewayProtocol protocol();
 	
 	/**
-	 * ANT路径匹配表达式配置
+	 * 服务URL前缀，全局唯一
 	 */
-	String patternPath();
+	String basePath();
 	
 }

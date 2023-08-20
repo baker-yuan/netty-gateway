@@ -20,7 +20,7 @@ public class ServiceInstanceDTO {
 	/**
 	 * 	服务唯一ID
 	 */
-	private String uniqueId;
+	private String serviceId;
 
 	/**
 	 * 	服务实例ID = address

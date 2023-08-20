@@ -45,7 +45,7 @@ public class RuleDTO {
 		/**
 		 * 服务唯一Id
 		 */
-		private String uniqueId;
+		private String serviceId;
 
 		/**
 		 * route对应的协议
