@@ -21,8 +21,7 @@ public class RuleTest {
 		rule.setId("1");
 		rule.setName("测试规则1");
 		rule.setOrder(1);
-		rule.setProtocol(GatewayProtocol.HTTP);
-		
+
 		Set<FilterConfig> filterConfigs = new HashSet<>();
 		
 		//	负载均衡过滤器
@@ -75,8 +74,7 @@ public class RuleTest {
 		rule.setId("2");
 		rule.setName("测试规则2");
 		rule.setOrder(2);
-		rule.setProtocol(GatewayProtocol.DUBBO);
-		
+
 		Set<FilterConfig> filterConfigs = new HashSet<>();
 		
 		//	负载均衡过滤器
@@ -128,8 +126,7 @@ public class RuleTest {
 		rule.setId("1");
 		rule.setName("测试规则1");
 		rule.setOrder(1);
-		rule.setProtocol(GatewayProtocol.HTTP);
-		
+
 		Set<FilterConfig> filterConfigs = new HashSet<>();
 		
 		//	负载均衡过滤器
@@ -191,8 +188,7 @@ public class RuleTest {
 		rule.setId("2");
 		rule.setName("测试规则2");
 		rule.setOrder(2);
-		rule.setProtocol(GatewayProtocol.DUBBO);
-		
+
 		Set<FilterConfig> filterConfigs = new HashSet<>();
 		
 		//	负载均衡过滤器

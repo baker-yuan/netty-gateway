@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.baker.gateway.common.config.Rule;
-import com.baker.gateway.common.config.Rule.FilterConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

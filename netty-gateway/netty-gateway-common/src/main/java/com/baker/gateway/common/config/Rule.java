@@ -29,11 +29,6 @@ public class Rule implements Comparable<Rule>, Serializable {
     private String name;
 
     /**
-     * 规则对应的协议
-     */
-    private String protocol;
-
-    /**
      * 规则排序，用于以后万一有需求做一个路径绑定多种规则，但是只能最终执行一个规则（按照该属性做优先级判断）
      */
     private Integer order;
@@ -44,10 +39,9 @@ public class Rule implements Comparable<Rule>, Serializable {
     private Set<Rule.FilterConfig> filterConfigs = new HashSet<>();
 
 
-    public Rule(String id, String name, String protocol, Integer order, Set<FilterConfig> filterConfigs) {
+    public Rule(String id, String name, Integer order, Set<FilterConfig> filterConfigs) {
         this.id = id;
         this.name = name;
-        this.protocol = protocol;
         this.order = order;
         this.filterConfigs = filterConfigs;
     }

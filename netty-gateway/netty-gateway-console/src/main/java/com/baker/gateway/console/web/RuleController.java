@@ -29,7 +29,6 @@ public class RuleController {
         Rule rule = new Rule();
         rule.setId(ruleDTO.getId());
         rule.setName(ruleDTO.getName());
-        rule.setProtocol(rule.getProtocol());
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
         ruleService.addRule(ruleDTO.getNamespace(), rule);
@@ -40,7 +39,6 @@ public class RuleController {
         Rule rule = new Rule();
         rule.setId(ruleDTO.getId());
         rule.setName(ruleDTO.getName());
-        rule.setProtocol(rule.getProtocol());
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
         ruleService.updateRule(ruleDTO.getNamespace(), rule);

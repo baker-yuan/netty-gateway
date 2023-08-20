@@ -166,6 +166,7 @@ public class NetUtils {
 
     public static String getLocalIp() {
         return getLocalIp("*>10>172>192>127");
+        // return "127.0.0.1";
     }
 
     public static String remoteAddress(SocketChannel channel) {
