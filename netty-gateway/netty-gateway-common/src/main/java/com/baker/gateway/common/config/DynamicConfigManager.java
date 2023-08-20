@@ -1,5 +1,7 @@
 package com.baker.gateway.common.config;
 
+import com.baker.gateway.common.enums.ResponseCode;
+import com.baker.gateway.common.exception.GatewayNotFoundException;
 import com.baker.gateway.common.util.Pair;
 
 import java.util.Iterator;
@@ -131,7 +133,11 @@ public class DynamicConfigManager {
     }
 
     public Rule getRule(String ruleId) {
-        return ruleMap.get(ruleId);
+        Rule rule = ruleMap.get(ruleId);
+        if (rule == null) {
+            throw new GatewayNotFoundException(ResponseCode.FILTER_CONFIG_PARSE_ERROR);
+        }
+        return rule;
     }
 
     public void removeRule(String ruleId) {

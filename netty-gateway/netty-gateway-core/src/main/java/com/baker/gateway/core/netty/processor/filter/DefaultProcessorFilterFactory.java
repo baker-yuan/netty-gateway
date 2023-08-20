@@ -60,6 +60,7 @@ public class DefaultProcessorFilterFactory extends AbstractProcessorFilterFactor
             // 根据Filter#order正序
             filterList.sort(Comparator.comparingInt(f -> f.getClass().getAnnotation(Filter.class).order()));
             try {
+                // 构建过滤器链条
                 super.buildFilterChain(filterType, filterList);
             } catch (Exception e) {
                 //	ignore

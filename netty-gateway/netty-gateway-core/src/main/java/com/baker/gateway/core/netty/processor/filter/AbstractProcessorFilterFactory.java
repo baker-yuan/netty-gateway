@@ -81,6 +81,7 @@ public abstract class AbstractProcessorFilterFactory implements ProcessorFilterF
 			if(filterId == null || filterId.length() < 1) {
 				filterId = processorFilter.getClass().getName();
 			}
+
 			String code = annotation.value().getCode();
 			Map<String, ProcessorFilter<Context>> filterMap = processorFilterTypeMap.get(code);
 			if(filterMap == null) {

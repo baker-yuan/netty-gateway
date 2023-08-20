@@ -157,7 +157,7 @@ public class GatewayContext extends BasicContext {
     /**
      * 调用该方法区分于原始的请求对象操作，主要就是做属性修改的
      */
-    public GatewayRequest getRequestMutale() {
+    public GatewayRequest getRequestMutable() {
         return gatewayRequest;
     }
 

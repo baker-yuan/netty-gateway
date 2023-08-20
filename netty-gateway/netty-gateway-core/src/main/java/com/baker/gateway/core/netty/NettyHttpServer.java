@@ -34,13 +34,26 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class NettyHttpServer implements LifeCycle {
-	
+	/**
+	 * 网关的通用配置信息类
+	 */
 	private final GatewayConfig gatewayConfig;
-	
+	/**
+	 * netty监听端口
+	 */
 	private int port = 8888;
-	
+
+	/**
+	 * 配置和启动ServerChannel
+	 */
 	private ServerBootstrap serverBootstrap;
+	/**
+	 * 接受来自客户端的连接
+	 */
 	private EventLoopGroup eventLoopGroupBoss;
+	/**
+	 * 处理已接受的连接
+	 */
 	private EventLoopGroup eventLoopGroupWork;
 
 	/**

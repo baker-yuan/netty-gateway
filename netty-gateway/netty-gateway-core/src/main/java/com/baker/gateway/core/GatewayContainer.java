@@ -24,7 +24,7 @@ public class GatewayContainer implements LifeCycle {
 	 */
 	private NettyProcessor nettyProcessor;
 	/**
-	 * 接收http请求的server
+	 * 接收http请求的server，接收到请求后交给NettyProcessor处理
 	 */
 	private NettyHttpServer nettyHttpServer;
 	/**

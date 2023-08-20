@@ -16,13 +16,20 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class AbstractEntryProcessorFilter<FilterConfigClass> extends AbstractLinkedProcessorFilter<Context> {
-
+	/**
+	 * 自定义过滤器@Filter信息
+	 */
 	protected Filter filterAnnotation;
-	
+	/**
+	 * 缓存，过滤器配置
+	 */
 	protected Cache<String, FilterConfigClass> cache;
-	
+	/**
+	 * 过滤器class类型，用于反序列化
+	 */
 	protected final Class<FilterConfigClass> filterConfigClass;
-	
+
+
 	public AbstractEntryProcessorFilter(Class<FilterConfigClass> filterConfigClass) {
 		this.filterAnnotation = this.getClass().getAnnotation(Filter.class);
 		this.filterConfigClass = filterConfigClass;

@@ -34,8 +34,6 @@ import io.netty.handler.codec.http.HttpUtil;
  * 解析请求信息，构建上下文对象
  */
 public class RequestHelper {
-	
-	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	/**
 	 * 解析FullHttpRequest 构建GatewayContext核心构建方法
@@ -54,6 +52,9 @@ public class RequestHelper {
 		//	4. 根据请求对象获取服务定义对应的方法调用，然后获取对应的规则
 		ServiceInvoker serviceInvoker = pair.getKey();
 		String ruleId = serviceInvoker.getRuleId();
+		if (ruleId == null) {
+			throw new GatewayNotFoundException(ResponseCode.RULE_NOT_CONFIG);
+		}
 		Rule rule = DynamicConfigManager.getInstance().getRule(ruleId);
 		
 		//	5. 构建我们而定GatewayContext对象

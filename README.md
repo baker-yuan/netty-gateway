@@ -89,7 +89,7 @@ curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
 ## 3、服务绑定规则
 
 ```bash
-curl --location --request GET 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?uniqueId=hello:1.0.0&invokerPath=/testGet&ruleId=1&prefixPath=netty-gateway-dev' \
+curl --location --request POST 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?serviceId=hello&invokerPath=/testMvc/testGet&ruleId=1&prefixPath=netty-gateway-dev' \
 --header 'uniqueId: hello:1.0.0' \
 --header 'Cookie: uid=1; uid=1; uid=1' \
 --header 'Content-Type: application/json' \
@@ -101,7 +101,7 @@ curl --location --request GET 'http://127.0.0.1:9005/serviceInvoker/bindingRuleI
 ## 4、测试下游服务
 
 ```bash
-curl --location --request GET 'http://127.0.0.1:8083/testGet'
+curl --location --request GET 'http://127.0.0.1:8083/testMvc/testGet'
 ```
 
 
@@ -109,9 +109,7 @@ curl --location --request GET 'http://127.0.0.1:8083/testGet'
 ## 5、测试网关
 
 ```bash
-curl --location --request GET 'http://127.0.0.1:8888/testGet' \
---header 'uniqueId: hello:1.0.0' \
---header 'Cookie: uid=1'
+curl --location --request GET 'http://127.0.0.1:8888/testMvc/testGet'
 ```
 
 
@@ -130,6 +128,9 @@ curl --location --request GET 'http://127.0.0.1:8888/testGet' \
 ```
 
 ## 2、要支持这些功能应该怎么设计网关
+
+```bash
+```
 
 
 
@@ -168,7 +169,7 @@ curl --location --request GET 'http://127.0.0.1:8888/testGet' \
 
 
 
-# 🚗 网关流程
+# 🚗 网关整体流程
 
 ![02_架构设计_006_流程设计图](./doc/img/02_架构设计_006_流程设计图.png)
 
@@ -301,9 +302,44 @@ public enum ProcessorFilterType {
 
 ```bash
 1、正常流程
-前置1 -> 前置2 -> 前置n -> 路由(中置) -> 下游 -> 后置
+前置1 -> 前置2 -> 前置n -> 路由(中置) -> 下游 -> 请求结束 -> 后置1 -> 后置1
 
 2、异常流程
-前置1 -> 发生异常 -> 异常 -> 后置
+前置1 -> 发生异常 -> 异常 -> 后置1 -> 后置2
+前置1 -> 前置2 -> 前置n -> 路由(中置) -> 下游 -> 异常 -> 后置1 -> 后置1
+```
+
+
+
+## 3、过滤器设计
+
+## 1、过滤器
+
+![filter-facotry-design](./doc/img/filter-design.png)
+
+
+
+## 2、过滤工厂
+
+![filter-factory](./doc/img/filter-factory.png)
+
+```java
+/**
+ * 抽象的过滤器工厂
+ */
+@Slf4j
+public abstract class AbstractProcessorFilterFactory implements ProcessorFilterFactory {
+	/**
+	 * pre + route + post
+	 */
+	public DefaultProcessorFilterChain defaultProcessorFilterChain = new DefaultProcessorFilterChain("defaultProcessorFilterChain"); 
+	/**
+	 * error + post
+	 */
+	public DefaultProcessorFilterChain errorProcessorFilterChain = new DefaultProcessorFilterChain("errorProcessorFilterChain"); 
+	/**
+	 * 根据过滤器类型获取filter集合 key=processorFilterType
+	 */
+	public Map<String , Map<String, ProcessorFilter<Context>>> processorFilterTypeMap = new LinkedHashMap<>();
 ```
 

@@ -42,7 +42,7 @@ public class HttpRouteFilter extends AbstractEntryProcessorFilter<FilterConfig> 
     @Override
     public void entry(Context ctx, Object... args) throws Throwable {
         GatewayContext gatewayContext = (GatewayContext) ctx;
-        Request request = gatewayContext.getRequestMutale().build();
+        Request request = gatewayContext.getRequestMutable().build();
 
         // 设置RS
         gatewayContext.setRSTime(TimeUtil.currentTimeMillis());

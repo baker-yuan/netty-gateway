@@ -33,9 +33,13 @@ public interface Registry {
 	 * 路径分隔符
 	 */
 	String PATH = "/";
-	
+
 	/**
 	 * 注册一个路径如果不存在
+	 *
+	 * @param path 路径
+	 * @param value 值
+	 * @param isPersistent 是否永久节点
 	 */
 	void registerPathIfNotExists(String path, String value, boolean isPersistent) throws Exception;
 	

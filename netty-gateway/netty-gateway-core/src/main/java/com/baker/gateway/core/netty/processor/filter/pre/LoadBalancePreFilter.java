@@ -82,7 +82,7 @@ public class LoadBalancePreFilter extends AbstractEntryProcessorFilter<LoadBalan
         }
 
         //	这一步非常关键，设置可修改的服务host，为当前选择的实例对象的address
-        gatewayContext.getRequestMutale().setModifyHost(serviceInstance.getAddress());
+        gatewayContext.getRequestMutable().setModifyHost(serviceInstance.getAddress());
     }
 
 

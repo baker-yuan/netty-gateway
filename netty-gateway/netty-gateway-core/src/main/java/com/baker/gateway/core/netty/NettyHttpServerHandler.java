@@ -26,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter { // SimpleChannelInboundHandler
-	
+	/**
+	 * 处理Netty核心逻辑的执行器
+	 */
 	private final NettyProcessor nettyProcessor;
 	
 	public NettyHttpServerHandler(NettyProcessor nettyProcessor) {
