@@ -37,7 +37,7 @@ public class ServiceInstanceController {
 	public void updateEnable(@RequestBody ServiceInstanceDTO serviceInstanceDTO) throws Exception {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateEnable(
-					serviceInstanceDTO.getPrefixPath(),
+					serviceInstanceDTO.getNamespace(),
 					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.isEnable());
@@ -51,7 +51,7 @@ public class ServiceInstanceController {
 	public void updateTags(@RequestBody ServiceInstanceDTO serviceInstanceDTO) throws Exception {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateTags(
-					serviceInstanceDTO.getPrefixPath(),
+					serviceInstanceDTO.getNamespace(),
 					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.getTags());
@@ -65,7 +65,7 @@ public class ServiceInstanceController {
 	public void updateWeight(@RequestBody ServiceInstanceDTO serviceInstanceDTO) throws Exception {
 		if(serviceInstanceDTO != null) {
 			serviceInstanceService.updateWeight(
-					serviceInstanceDTO.getPrefixPath(),
+					serviceInstanceDTO.getNamespace(),
 					serviceInstanceDTO.getServiceId(),
 					serviceInstanceDTO.getServiceInstanceId(),
 					serviceInstanceDTO.getWeight());

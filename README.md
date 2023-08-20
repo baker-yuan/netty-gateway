@@ -42,7 +42,7 @@ curl --location --request GET 'http://127.0.0.1:9005/rule/getList?prefixPath=net
 ### 调用方法列表
 
 ```bash
-curl --location --request GET 'http://127.0.0.1:9005/serviceInvoker/getListByUniqueId?prefixPath=netty-gateway-dev&uniqueId=hello:1.0.0' \
+curl --location --request GET 'http://127.0.0.1:9005/serviceInvoker/getListByUniqueId?namespace=netty-gateway-dev&uniqueId=hello:1.0.0' \
 --header 'Cookie: uid=1'
 ```
 
@@ -80,7 +80,7 @@ curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
     "name": "测试",
     "order": 1,
     "protocol": "http",
-    "prefixPath": "netty-gateway-dev"
+    "namespace": "netty-gateway-dev"
 }'
 ```
 
@@ -89,7 +89,7 @@ curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
 ## 3、服务绑定规则
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?serviceId=hello&invokerPath=/testMvc/testGet&ruleId=1&prefixPath=netty-gateway-dev' \
+curl --location --request POST 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?serviceId=hello&invokerPath=/testMvc/testGet&ruleId=1&namespace=netty-gateway-dev' \
 --header 'uniqueId: hello:1.0.0' \
 --header 'Cookie: uid=1; uid=1; uid=1' \
 --header 'Content-Type: application/json' \
@@ -144,7 +144,7 @@ curl --location --request GET 'http://127.0.0.1:8888/testMvc/testGet'
 
 ## 2、整体包结构说明
 
-```bash
+```text
 ~/code/gateway/netty-gateway (master*) » find . -maxdepth 3 -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
 .
 |____netty-gateway-test-mvc

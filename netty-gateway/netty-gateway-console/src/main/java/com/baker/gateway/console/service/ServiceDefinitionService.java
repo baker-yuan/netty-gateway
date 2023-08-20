@@ -23,9 +23,9 @@ public class ServiceDefinitionService {
 	/**
 	 * 根据前缀获取服务定义列表
 	 */
-	public List<ServiceDefinition> getServiceDefinitionList(String prefixPath) throws Exception {
+	public List<ServiceDefinition> getServiceDefinitionList(String namespace) throws Exception {
 		String path = RegistryService.PATH 
-				+ prefixPath 
+				+ namespace
 				+ RegistryService.SERVICE_PREFIX;
 		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
 		List<ServiceDefinition> serviceDefinitions = new ArrayList<>();
@@ -41,20 +41,20 @@ public class ServiceDefinitionService {
 		return serviceDefinitions;
 	}
 	
-	public void updatePatternPathByServiceId(String prefixPath, String serviceId, String patternPath) throws Exception {
-		updateServiceDefinitionByServiceId(prefixPath, serviceId, false);
+	public void updatePatternPathByServiceId(String namespace, String serviceId, String patternPath) throws Exception {
+		updateServiceDefinitionByServiceId(namespace, serviceId, false);
 	}
 	
-	public void updateEnableByServiceId(String prefixPath, String serviceId, boolean enable) throws Exception {
-		updateServiceDefinitionByServiceId(prefixPath, serviceId, enable);
+	public void updateEnableByServiceId(String namespace, String serviceId, boolean enable) throws Exception {
+		updateServiceDefinitionByServiceId(namespace, serviceId, enable);
 	}
 
 	/**
 	 * 根据服务唯一ID 更新patternPath enable
 	 */
-	private void updateServiceDefinitionByServiceId(String prefixPath, String serviceId, Object param) throws Exception {
+	private void updateServiceDefinitionByServiceId(String namespace, String serviceId, Object param) throws Exception {
 		String path = RegistryService.PATH 
-				+ prefixPath 
+				+ namespace
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
 				+ serviceId;
@@ -76,9 +76,9 @@ public class ServiceDefinitionService {
 	/**
 	 * 根据serviceId获取指定的服务下的调用方法列表
 	 */
-	public List<ServiceInvoker> getServiceInvokerByServiceId(String prefixPath, String serviceId) throws Exception {
+	public List<ServiceInvoker> getServiceInvokerByServiceId(String namespace, String serviceId) throws Exception {
 		String path = RegistryService.PATH 
-				+ prefixPath 
+				+ namespace
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
 				+ serviceId;
@@ -97,9 +97,9 @@ public class ServiceDefinitionService {
 	/**
 	 * 为ServiceInvoker绑定一个规则ID
 	 */
-	public void serviceInvokerBindingRuleId(String prefixPath, String serviceId, String invokerPath, String ruleId) throws Exception {
+	public void serviceInvokerBindingRuleId(String namespace, String serviceId, String invokerPath, String ruleId) throws Exception {
 		String path = RegistryService.PATH 
-				+ prefixPath 
+				+ namespace
 				+ RegistryService.SERVICE_PREFIX
 				+ RegistryService.PATH 
 				+ serviceId;

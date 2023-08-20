@@ -21,11 +21,11 @@ public class ServiceDefinitionController {
 	/**
 	 * 获取服务定义列表
 	 *
-	 * @param prefixPath 前缀路径
+	 * @param namespace 前缀路径
 	 */
 	@GetMapping("/serviceDefinition/getList")
-	public List<ServiceDefinition> getList(@RequestParam("prefixPath") String prefixPath) throws Exception {
-		return serviceDefinitionService.getServiceDefinitionList(prefixPath);
+	public List<ServiceDefinition> getList(@RequestParam("namespace") String namespace) throws Exception {
+		return serviceDefinitionService.getServiceDefinitionList(namespace);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class ServiceDefinitionController {
 	public void updatePatternPathByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
 		if(serviceDefinitionDTO != null && serviceDefinitionDTO.getPatternPath()!= null) {
 			serviceDefinitionService.updatePatternPathByServiceId(
-					serviceDefinitionDTO.getPrefixPath(),
+					serviceDefinitionDTO.getNamespace(),
 					serviceDefinitionDTO.getServiceId(),
 					serviceDefinitionDTO.getPatternPath());			
 		}
@@ -48,7 +48,7 @@ public class ServiceDefinitionController {
 	public void updateEnableByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
 		if(serviceDefinitionDTO != null) {
 			serviceDefinitionService.updateEnableByServiceId(
-					serviceDefinitionDTO.getPrefixPath(),
+					serviceDefinitionDTO.getNamespace(),
 					serviceDefinitionDTO.getServiceId(),
 					serviceDefinitionDTO.isEnable());			
 		}

@@ -17,11 +17,11 @@ public class ServiceDefinitionDTO {
 	/**
 	 * 	前缀
 	 */
-	private String prefixPath;	// namespace = netty-gateway-dev
+	private String namespace;
 	/**
 	 * 	服务唯一ID
 	 */
-	private String serviceId;	//	serviceId:version
+	private String serviceId;	
 
     /**
      * 	访问真实ANT表达式匹配

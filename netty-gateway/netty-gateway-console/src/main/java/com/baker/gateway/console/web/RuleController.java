@@ -32,7 +32,7 @@ public class RuleController {
         rule.setProtocol(rule.getProtocol());
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
-        ruleService.addRule(ruleDTO.getPrefixPath(), rule);
+        ruleService.addRule(ruleDTO.getNamespace(), rule);
     }
 
     @PostMapping("rule/update")
@@ -43,7 +43,7 @@ public class RuleController {
         rule.setProtocol(rule.getProtocol());
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
-        ruleService.updateRule(ruleDTO.getPrefixPath(), rule);
+        ruleService.updateRule(ruleDTO.getNamespace(), rule);
     }
 
     @PostMapping("rule/delete")

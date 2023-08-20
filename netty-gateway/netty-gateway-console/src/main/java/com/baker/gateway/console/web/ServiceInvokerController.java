@@ -23,32 +23,32 @@ public class ServiceInvokerController {
 	/**
 	 * 根据serviceId获取指定的服务下的调用方法列表
 	 *
-	 * @param prefixPath
+	 * @param namespace
 	 * @param serviceId
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("/serviceInvoker/getListByServiceId")
-	public List<ServiceInvoker> getListByServiceId(@RequestParam("prefixPath")String prefixPath,
+	public List<ServiceInvoker> getListByServiceId(@RequestParam("namespace")String namespace,
 												   @RequestParam("serviceId")String serviceId) throws Exception{
-        return serviceDefinitionService.getServiceInvokerByServiceId(prefixPath, serviceId);
+        return serviceDefinitionService.getServiceInvokerByServiceId(namespace, serviceId);
 	}
 
 	/**
 	 * 为ServiceInvoker绑定一个规则ID
 	 *
-	 * @param prefixPath
+	 * @param namespace
 	 * @param serviceId
 	 * @param invokerPath
 	 * @param ruleId
 	 * @throws Exception
 	 */
 	@RequestMapping("/serviceInvoker/bindingRuleId")
-	public void bindingRuleId(@RequestParam("prefixPath")String prefixPath, 
+	public void bindingRuleId(@RequestParam("namespace")String namespace,
 			@RequestParam("serviceId")String serviceId,
 			@RequestParam("invokerPath")String invokerPath,
 			@RequestParam("ruleId")String ruleId) throws Exception {
-		serviceDefinitionService.serviceInvokerBindingRuleId(prefixPath, serviceId, invokerPath, ruleId);
+		serviceDefinitionService.serviceInvokerBindingRuleId(namespace, serviceId, invokerPath, ruleId);
 	}
 	
 }

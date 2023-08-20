@@ -28,7 +28,7 @@ public class RuleDTO {
 		 * 前缀
 		 */
 		@NotBlank
-		private String prefixPath;
+		private String namespace;
 
 		/**
 		 * 规则ID

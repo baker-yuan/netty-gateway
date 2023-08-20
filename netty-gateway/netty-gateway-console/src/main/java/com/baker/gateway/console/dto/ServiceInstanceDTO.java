@@ -16,7 +16,7 @@ public class ServiceInstanceDTO {
 	/**
 	 * 	前缀
 	 */
-	private String prefixPath;
+	private String namespace;
 	/**
 	 * 	服务唯一ID
 	 */
