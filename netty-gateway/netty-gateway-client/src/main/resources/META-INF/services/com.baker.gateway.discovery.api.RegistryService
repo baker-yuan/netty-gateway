@@ -1,0 +1,2 @@
+## 	注册中心的实现类
+com.baker.gateway.discovery.RegistryServiceEtcdImpl

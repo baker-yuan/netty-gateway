@@ -1,0 +1,13 @@
+## pre，前置过滤器，LoadBalancePreFilter应该放到第一位
+com.baker.gateway.core.netty.processor.filter.pre.LoadBalancePreFilter
+com.baker.gateway.core.netty.processor.filter.pre.TimeoutPreFilter
+
+## route，路由(中置)过滤器
+com.baker.gateway.core.netty.processor.filter.route.HttpRouteFilter
+com.baker.gateway.core.netty.processor.filter.route.DubboRouteFilter
+
+## post，后置过滤器
+com.baker.gateway.core.netty.processor.filter.post.StatisticsPostFilter
+
+## error，异常置过滤器，DefaultErrorFilter应该放到最后一位
+com.baker.gateway.core.netty.processor.filter.error.DefaultErrorFilter

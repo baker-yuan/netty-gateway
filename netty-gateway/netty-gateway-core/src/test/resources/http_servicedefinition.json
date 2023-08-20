@@ -1,0 +1,31 @@
+{
+	"enable": true,
+	"envType": "dev",
+	"invokerMap": {
+		"/testEntity": {
+            "ruleId":"1",
+			"invokerPath": "/testEntity",
+			"timeout": 5000
+		},
+		"/testParam": {
+            "ruleId":"1",
+			"invokerPath": "/testParam",
+			"timeout": 5000
+		},
+		"/testPost": {
+            "ruleId":"1",
+			"invokerPath": "/testPost",
+			"timeout": 5000
+		},
+		"/testGet": {
+            "ruleId":"1",
+			"invokerPath": "/testGet",
+			"timeout": 5000
+		}
+	},
+	"patternPath": "/test*",
+	"protocol": "http",
+	"serviceId": "hello",
+	"uniqueId": "hello:1.0.0",
+	"version": "1.0.0"
+}

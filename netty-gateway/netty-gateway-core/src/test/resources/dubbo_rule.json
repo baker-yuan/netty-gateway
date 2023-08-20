@@ -1,0 +1,19 @@
+{
+	"filterConfigs": [{
+		"config": "{\"loggable\":\"false\"}",
+		"id": "defaultErrorFilter"
+	}, {
+		"config": "{\"loggable\":\"false\"}",
+		"id": "dubboRouteFilter"
+	}, {
+		"config": "{\"loggable\":\"false\",\"loadBalanceStrategy\":\"RANDOM\"}",
+		"id": "loadBalancePreFilter"
+	}, {
+		"config": "{\"loggable\":\"false\",\"timeout\":\"6000\"}",
+		"id": "timeoutPreFilter"
+	}],
+	"id": "2",
+	"name": "测试规则2",
+	"order": 2,
+	"protocol": "dubbo"
+}

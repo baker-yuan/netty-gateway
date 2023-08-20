@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  	<parent>
+    	<groupId>com.baker</groupId>
+    	<artifactId>netty-gateway</artifactId>
+    	<version>1.0.0</version>
+  	</parent>
+  	<artifactId>netty-gateway-discovery</artifactId>
+  	<packaging>pom</packaging>
+  	<modules>
+  		<module>netty-gateway-discovery-api</module>
+  		<module>netty-gateway-discovery-etcd</module>
+  	</modules>
+  	
+  	<properties>
+  		<netty-gateway-commonn.version>1.0.0</netty-gateway-commonn.version>
+		<jetcd-core.version>0.5.4</jetcd-core.version>
+        <lombok.version>1.18.0</lombok.version> 
+  	</properties>
+  	<dependencyManagement>
+        <dependencies>
+			<dependency>
+				<groupId>com.baker</groupId>
+				<artifactId>netty-gateway-common</artifactId>
+				<version>${netty-gateway-commonn.version}</version>
+			</dependency>          
+			<dependency>
+			    <groupId>io.etcd</groupId>
+			    <artifactId>jetcd-core</artifactId>
+			    <version>${jetcd-core.version}</version>
+			</dependency>
+	     </dependencies>
+    </dependencyManagement>  	  	
+</project>

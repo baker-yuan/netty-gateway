@@ -1,0 +1,2 @@
+## Plugin Loader Spi
+com.baker.gateway.core.plugin.metric.kafka.MetricKafkaClientPlugin

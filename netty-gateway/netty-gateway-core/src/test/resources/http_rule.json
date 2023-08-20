@@ -1,0 +1,19 @@
+{
+	"filterConifgs": [{
+		"config": "{\"loggable\":\"false\"}",
+		"id": "defaultErrorFilter"
+	}, {
+		"config": "{\"loggable\":\"false\",\"loadBalanceStrategy\":\"RANDOM\"}",
+		"id": "loadBalancePreFilter"
+	}, {
+		"config": "{\"loggable\":\"false\"}",
+		"id": "httpRouteFilter"
+	}, {
+		"config": "{\"loggable\":\"false\",\"timeout\":\"4000\"}",
+		"id": "timeoutPreFilter"
+	}],
+	"id": "1",
+	"name": "测试规则1",
+	"order": 1,
+	"protocol": "http"
+}

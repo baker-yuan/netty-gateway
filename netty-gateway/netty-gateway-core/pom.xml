@@ -1,0 +1,151 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+  	<parent>
+    	<groupId>com.baker</groupId>
+    	<artifactId>netty-gateway</artifactId>
+    	<version>1.0.0</version>
+  	</parent>
+  	<artifactId>netty-gateway-core</artifactId>
+
+  	<properties>
+  		<netty-gateway-commonn.version>1.0.0</netty-gateway-commonn.version>
+  		<netty-gateway-discovery-api.version>1.0.0</netty-gateway-discovery-api.version>
+  		<netty-gateway-discovery-etcd.version>1.0.0</netty-gateway-discovery-etcd.version>
+  		<zookeeper.version>3.4.11</zookeeper.version>	
+        <dubbo.version>2.7.4.1</dubbo.version>
+        <!-- <dubbo.version>2.7.12</dubbo.version> -->		
+  	</properties>
+  	  	
+  	<dependencies>
+		<dependency>
+			<groupId>com.baker</groupId>
+			<artifactId>netty-gateway-common</artifactId>
+			<version>${netty-gateway-commonn.version}</version>
+		</dependency>
+		
+		<!--async-http-client-->
+		<dependency>
+			<groupId>org.asynchttpclient</groupId>
+			<artifactId>async-http-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.asynchttpclient</groupId>
+			<artifactId>async-http-client-netty-utils</artifactId>
+		</dependency>
+		
+		<!--dubbo-->
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>${zookeeper.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>		
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-dependencies-zookeeper</artifactId>
+			<version>${dubbo.version}</version>
+			<type>pom</type>
+			<exclusions>
+				<exclusion>
+            		<groupId>org.apache.zookeeper</groupId>
+            		<artifactId>zookeeper</artifactId>
+				</exclusion>			
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-serialization-kryo</artifactId>
+			<version>${dubbo.version}</version>
+		</dependency>
+		
+		<!--disruptor-->
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+		</dependency>	
+		
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>		
+
+		<!-- 注册中心 -->
+		<dependency>
+			<groupId>com.baker</groupId>
+			<artifactId>netty-gateway-discovery-api</artifactId>
+			<version>${netty-gateway-discovery-api.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>com.baker</groupId>
+			<artifactId>netty-gateway-discovery-etcd</artifactId>
+			<version>${netty-gateway-discovery-etcd.version}</version>
+		</dependency>	
+  	</dependencies>  
+  	
+  		<build>
+	  	<plugins>
+	        <plugin>
+	            <artifactId>maven-assembly-plugin</artifactId>
+	            <configuration>
+	                <archive>
+	                    <manifest>
+	                        <mainClass>com.baker.gateway.core.Bootstrap</mainClass>
+	                    </manifest>
+	                </archive>
+	                <descriptorRefs>
+	                    <descriptorRef>jar-with-dependencies</descriptorRef>
+	                </descriptorRefs>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <id>make-assembly</id> <!-- 此处指定继承合并 -->
+	                    <phase>package</phase> <!-- 绑定到打包阶段 -->
+	                    <goals>
+	                        <goal>single</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+	    </plugins>	
+	</build>
+  	
+  		
+</project>

@@ -1,0 +1,38 @@
+{
+	"enable": true,
+	"envType": "dev",
+	"invokerMap": {
+		"/sayHelloUser/b": {
+            "ruleId":"2",
+			"interfaceClass": "com.baker.test.dubbo.service.HelloService",
+			"invokerPath": "/sayHelloUser/b",
+			"methodName": "sayHelloUser",
+			"parameterTypes": ["com.baker.test.dubbo.service.User", "java.lang.String"],
+			"registerAddress": "zookeeper://192.168.11.111:2181?backup=192.168.11.112:2181,192.168.11.113:2181",
+			"timeout": 3000
+		},
+		"/sayHelloUser/c": {
+            "ruleId":"2",
+			"interfaceClass": "com.baker.test.dubbo.service.HelloService",
+			"invokerPath": "/sayHelloUser/c",
+			"methodName": "sayHelloUser",
+			"parameterTypes": ["java.lang.String"],
+			"registerAddress": "zookeeper://192.168.11.111:2181?backup=192.168.11.112:2181,192.168.11.113:2181",
+			"timeout": 3000
+		},
+		"/sayHelloUser/a": {
+            "ruleId":"2",
+			"interfaceClass": "com.baker.test.dubbo.service.HelloService",
+			"invokerPath": "/sayHelloUser/a",
+			"methodName": "sayHelloUser",
+			"parameterTypes": ["com.baker.test.dubbo.service.User"],
+			"registerAddress": "zookeeper://192.168.11.111:2181?backup=192.168.11.112:2181,192.168.11.113:2181",
+			"timeout": 3000
+		}
+	},
+	"patternPath": "/say*/**",
+	"protocol": "dubbo",
+	"serviceId": "say",
+	"uniqueId": "say:1.0.0",
+	"version": "1.0.0"
+}
