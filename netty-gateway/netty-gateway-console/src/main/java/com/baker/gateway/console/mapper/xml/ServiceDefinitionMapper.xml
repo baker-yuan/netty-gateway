@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baker.gateway.console.mapper.ServiceDefinitionMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.mybatis.model.ServiceDefinitionEntity">
+        <id column="service_id" property="serviceId" jdbcType="VARCHAR" />
+        <result column="base_path" property="basePath" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="VARCHAR" />
+        <result column="protocol" property="protocol" jdbcType="VARCHAR" />
+        <result column="enable" property="enable" jdbcType="BOOLEAN" />
+        <result column="invoker_map" property="invokerMap" jdbcType="VARCHAR" />
+        <result column="draft" property="draft" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.baker.gateway.console.entity.ServiceDefinitionEntity">
+        INSERT INTO service_definition_entity (service_id, base_path, version, protocol, enable, invoker_map, draft)
+        VALUES (#{serviceId}, #{basePath}, #{version}, #{protocol}, #{enable}, #{invokerMap}, #{draft})
+    </insert>
+
+    <update id="update" parameterType="com.baker.gateway.console.entity.ServiceDefinitionEntity">
+        UPDATE service_definition_entity
+        <set>
+            <if test="basePath != null">base_path = #{basePath},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="protocol != null">protocol = #{protocol},</if>
+            <if test="enable != null">enable = #{enable},</if>
+            <if test="invokerMap != null">invoker_map = #{invokerMap},</if>
+            <if test="draft != null">draft = #{draft}</if>
+        </set>
+        WHERE service_id = #{serviceId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM service_definition_entity WHERE service_id = #{serviceId}
+    </delete>
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM service_definition_entity WHERE service_id = #{serviceId}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM service_definition_entity
+    </select>
+
+</mapper>

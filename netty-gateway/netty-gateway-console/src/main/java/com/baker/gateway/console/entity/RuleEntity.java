@@ -2,10 +2,6 @@ package com.baker.gateway.console.entity;
 
 import lombok.*;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 规则模型
  */
@@ -13,7 +9,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rule  {
+public class RuleEntity {
     /**
      * 规则ID(全局唯一)
      */
@@ -32,24 +28,10 @@ public class Rule  {
     /**
      * 规则集合定义
      */
-    private Set<FilterConfig> filterConfigs = new HashSet<>();
+    private String filterConfigs;
 
     /**
-     * 过滤器的配置类
+     * 草稿
      */
-    @Data
-    @NoArgsConstructor
-    @EqualsAndHashCode
-    public static class FilterConfig {
-		/**
-		 * 过滤器的唯一ID
-		 */
-		private String id;
-
-		/**
-		 * 过滤器的配置信息描述，json string  {timeout: 500}  {balance: rr}
-		 */
-		private String config;
-    }
-
+    private String draft;
 }

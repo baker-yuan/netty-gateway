@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.baker.gateway.common.config.ServiceInstance;
@@ -14,8 +15,18 @@ import com.baker.gateway.discovery.api.RegistryService;
 @Service
 public class ServiceInstanceService {
 
+	@Value("${gateway.console.namespace}")
+	private String namespace;
+
 	@Autowired
 	private RegistryService registryService;
+
+
+
+	public void addOrUpdate(ServiceInstance serviceInstance) {
+
+	}
+
 
 	/**
 	 * 根据服务唯一标识获取实例列表
@@ -110,5 +121,6 @@ public class ServiceInstanceService {
 			registryService.registerEphemeralNode(p, value);
 		}
 	}
-	
+
+
 }

@@ -12,11 +12,11 @@ import lombok.Data;
 public class GatewayProperties {
 
 	public static final String GATEWAY_PREFIX = "gateway";
-	
+
 	/**
-	 * 	etcd注册中心地址
+	 * 控制台地址
 	 */
-	private String registryAddress;
+	private String consoleUrl;
 	
 	/**
 	 * 	etcd注册命名空间

@@ -46,7 +46,7 @@ public class ServiceDefinition implements Serializable {
 	/**
 	 * 服务启用禁用
 	 */
-	private boolean enable = true;
+	private Boolean enable = true;
 	
 	/**
 	 * 服务方法信息 key=invokerPath(完整路径) value=服务调用的接口模型描述

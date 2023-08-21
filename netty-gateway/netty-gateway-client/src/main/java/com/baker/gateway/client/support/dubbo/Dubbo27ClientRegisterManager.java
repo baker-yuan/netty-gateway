@@ -84,7 +84,7 @@ public class Dubbo27ClientRegisterManager extends AbstractClientRegisterManager 
 			ServiceDefinition serviceDefinition = GatewayAnnotationScanner.getInstance().scanbuilder(bean, serviceBean);
 			if(serviceDefinition != null) {
 				//	设置环境
-				serviceDefinition.setEnvType(getEnv());
+//				serviceDefinition.setEnvType(getEnv());
 				//	注册服务定义
 				registerServiceDefinition(serviceDefinition);
 				

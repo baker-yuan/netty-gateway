@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baker.gateway.console.mapper.RuleMapper">
+
+    <resultMap id="BaseResultMap" type="com.baker.gateway.console.entity.RuleEntity">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="order" property="order" jdbcType="INTEGER" />
+        <result column="filter_configs" property="filterConfigs" jdbcType="VARCHAR" />
+        <result column="draft" property="draft" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.baker.gateway.console.entity.RuleEntity">
+        INSERT INTO rule_entity (id, name, order, filter_configs, draft)
+        VALUES (#{id}, #{name}, #{order}, #{filterConfigs}, #{draft})
+    </insert>
+
+    <update id="update" parameterType="com.baker.gateway.console.entity.RuleEntity">
+        UPDATE rule_entity
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="order != null">order = #{order},</if>
+            <if test="filterConfigs != null">filter_configs = #{filterConfigs},</if>
+            <if test="draft != null">draft = #{draft}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM rule_entity WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM rule_entity WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM rule_entity
+    </select>
+
+</mapper>

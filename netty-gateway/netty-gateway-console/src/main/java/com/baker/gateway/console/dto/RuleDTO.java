@@ -24,12 +24,6 @@ public class RuleDTO {
 	@AllArgsConstructor
 	public static class AddOrUpdateRuleDTO {
 		/**
-		 * 前缀
-		 */
-		@NotBlank
-		private String namespace;
-
-		/**
 		 * 规则ID
 		 */
 		@NotBlank
@@ -71,12 +65,6 @@ public class RuleDTO {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class DeleteRuleDTO {
-		/**
-		 * 前缀
-		 */
-		@NotBlank
-		private String prefixPath;
-
 		/**
 		 * 规则ID
 		 */

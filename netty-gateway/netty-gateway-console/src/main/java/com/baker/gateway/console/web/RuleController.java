@@ -19,34 +19,24 @@ public class RuleController {
     @Autowired
     private RuleService ruleService;
 
-    @GetMapping("rule/getList")
-    public List<Rule> getList(@RequestParam("prefixPath") String prefixPath) throws Exception {
-        return ruleService.getRuleList(prefixPath);
+    @GetMapping("/rule/getList")
+    public List<Rule> getList() throws Exception {
+        return ruleService.getRuleListByDb();
     }
 
-    @PostMapping("rule/add")
+    @PostMapping("/rule/addOrUpdate")
     public void addRule(@RequestBody @Validated RuleDTO.AddOrUpdateRuleDTO ruleDTO) throws Exception {
         Rule rule = new Rule();
         rule.setId(ruleDTO.getId());
         rule.setName(ruleDTO.getName());
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
-        ruleService.addRule(ruleDTO.getNamespace(), rule);
+        ruleService.addOrUpdateToDb(rule);
     }
 
-    @PostMapping("rule/update")
-    public void updateRule(@RequestBody @Validated RuleDTO.AddOrUpdateRuleDTO ruleDTO) throws Exception {
-        Rule rule = new Rule();
-        rule.setId(ruleDTO.getId());
-        rule.setName(ruleDTO.getName());
-        rule.setOrder(ruleDTO.getOrder());
-        rule.setFilterConfigs(ruleDTO.getFilterConfigs());
-        ruleService.updateRule(ruleDTO.getNamespace(), rule);
-    }
-
-    @PostMapping("rule/delete")
+    @PostMapping("/rule/delete")
     public void deleteRule(@RequestBody @Validated RuleDTO.DeleteRuleDTO ruleDTO) {
-        ruleService.deleteRule(ruleDTO.getPrefixPath(), ruleDTO.getId());
+        ruleService.deleteRuleToDb(ruleDTO.getId());
     }
 
 }
