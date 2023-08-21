@@ -45,10 +45,15 @@ public class ServiceDefinitionService {
 
 	public void report(ServiceDefinition serviceDefinition) {
 		ServiceDefinitionEntity entity = modelToEntity(serviceDefinition);
+		Integer update = serviceDefinitionMapper.update(entity);
+		if (update != null && update != 0) {
+
+		}
+
 		if (serviceDefinition.getServiceId() == null) {
 			serviceDefinitionMapper.insert(entity);
 		} else {
-			serviceDefinitionMapper.update(entity);
+
 		}
 	}
 

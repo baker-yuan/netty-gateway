@@ -17,12 +17,7 @@ public class GatewayProperties {
 	 * 控制台地址
 	 */
 	private String consoleUrl;
-	
-	/**
-	 * 	etcd注册命名空间
-	 */
-	private String namespace = GATEWAY_PREFIX;
-	
+
 	/**
 	 * 	环境属性
 	 */
