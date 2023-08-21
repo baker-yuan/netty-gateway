@@ -91,6 +91,7 @@ public class GatewayAnnotationScanner {
         }
         //	设置属性
         serviceDefinition.setServiceId(serviceId);
+        serviceDefinition.setBasePath(basePath);
         serviceDefinition.setVersion(version);
         serviceDefinition.setProtocol(protocol.getCode());
         serviceDefinition.setBasePath(basePath);

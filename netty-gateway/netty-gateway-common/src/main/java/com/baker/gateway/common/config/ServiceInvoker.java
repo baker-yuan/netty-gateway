@@ -1,5 +1,7 @@
 package com.baker.gateway.common.config;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 /**
  * 服务调用的接口模型描述
  */

@@ -15,7 +15,7 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 	/**
 	 * 调用接口超时时间
 	 */
-	protected int timeout = 5000;
+	protected Integer timeout = 5000;
 
 	@Override
 	public String getInvokerPath() {

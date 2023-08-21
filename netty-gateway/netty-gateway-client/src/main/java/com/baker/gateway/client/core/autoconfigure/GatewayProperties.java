@@ -27,6 +27,4 @@ public class GatewayProperties {
 	 * 	环境属性
 	 */
 	private String env = "dev";
-	
-	
 }

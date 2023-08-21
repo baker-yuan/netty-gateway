@@ -43,7 +43,7 @@ public class ServiceDefinitionService {
 		return result;
 	}
 
-	public void addOrUpdateServiceDefinitionToDb(ServiceDefinition serviceDefinition) {
+	public void report(ServiceDefinition serviceDefinition) {
 		ServiceDefinitionEntity entity = modelToEntity(serviceDefinition);
 		if (serviceDefinition.getServiceId() == null) {
 			serviceDefinitionMapper.insert(entity);

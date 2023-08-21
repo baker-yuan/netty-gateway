@@ -93,7 +93,7 @@ public abstract class AbstractClientRegisterManager {
 	 */
 	protected void registerServiceDefinition(ServiceDefinition serviceDefinition) throws Exception {
 		HttpResponse response = HttpRequest
-				.post(consoleUrl + "/serviceDefinition/addOrUpdate")
+				.post(consoleUrl + "/serviceDefinition/report")
 				.body(JSONUtil.toJSONString(serviceDefinition))
 				.execute();
 		if (response.getStatus()  == 200) {
@@ -107,7 +107,7 @@ public abstract class AbstractClientRegisterManager {
 	 */
 	protected void registerServiceInstance(ServiceInstance serviceInstance) throws Exception {
 		HttpResponse response = HttpRequest
-				.post(consoleUrl + "/serviceInstance/addOrUpdate")
+				.post(consoleUrl + "/serviceInstance/report")
 				.body(JSONUtil.toJSONString(serviceInstance))
 				.execute();
 		if (response.getStatus()  == 200) {

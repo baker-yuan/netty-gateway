@@ -1,5 +1,6 @@
 package com.baker.gateway.common.config;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@JsonDeserialize(using = ServiceDefinitionDeserializer.class)
 public class ServiceDefinition implements Serializable {
 
 	private static final long serialVersionUID = -8263365765897285189L;
@@ -39,11 +41,6 @@ public class ServiceDefinition implements Serializable {
 	private String protocol;
 
 	/**
-	 * 环境名称
-	 */
-	private String envType;
-
-	/**
 	 * 服务启用禁用
 	 */
 	private Boolean enable = true;
@@ -56,13 +53,14 @@ public class ServiceDefinition implements Serializable {
 
 
 	public ServiceDefinition(String serviceId, String version, String protocol,
-			String envType, boolean enable, Map<String, ServiceInvoker> invokerMap) {
+			boolean enable, Map<String, ServiceInvoker> invokerMap) {
 		this.serviceId = serviceId;
 		this.version = version;
 		this.protocol = protocol;
-		this.envType = envType;
 		this.enable = enable;
 		this.invokerMap = invokerMap;
 	}
+
+
 
 }

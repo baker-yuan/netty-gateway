@@ -28,17 +28,9 @@ public class ServiceDefinitionController {
 	}
 
 
-	@PostMapping("/serviceDefinition/addOrUpdate")
-	public void addOrUpdateServiceDefinitionToDb(@RequestBody @Validated ServiceDefinitionDTO.AddOrUpdateServiceDefinitionDTO req) throws Exception {
-		ServiceDefinition serviceDefinition = new ServiceDefinition();
-		serviceDefinition.setServiceId(req.getServiceId());
-		serviceDefinition.setBasePath(req.getBasePath());
-		serviceDefinition.setVersion(req.getVersion());
-		serviceDefinition.setProtocol(req.getProtocol());
-		serviceDefinition.setEnvType(req.getEnvType());
-		serviceDefinition.setEnable(req.getEnable());
-		serviceDefinition.setInvokerMap(req.getInvokerMap());
-		serviceDefinitionService.addOrUpdateServiceDefinitionToDb(serviceDefinition);
+	@PostMapping("/serviceDefinition/report")
+	public void addOrUpdateServiceDefinitionToDb(@RequestBody @Validated ServiceDefinition req) throws Exception {
+		serviceDefinitionService.report(req);
 	}
 
 
