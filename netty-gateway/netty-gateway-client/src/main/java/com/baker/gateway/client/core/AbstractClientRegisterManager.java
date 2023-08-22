@@ -34,16 +34,11 @@ public abstract class AbstractClientRegisterManager {
 	public static Properties properties = new Properties();
 
 
-	public static final String ENV_KEY = "env";
 	public static final String CONSOLE_URL_KEY = "consoleUrl";
 	/**
 	 * 控制台地址
 	 */
 	protected static String consoleUrl;
-	/**
-	 * 环境属性
-	 */
-	protected static String env;
 
 	/**
 	 * 是否注册过
@@ -59,7 +54,6 @@ public abstract class AbstractClientRegisterManager {
 			if(is != null) {
 				properties.load(is);
 				consoleUrl = properties.getProperty(CONSOLE_URL_KEY);
-				env = properties.getProperty(ENV_KEY);
 			}
 		} catch (Exception e) {
 			log.error("#AbstractClientRegisteryManager# InputStream load is error", e);
@@ -83,9 +77,6 @@ public abstract class AbstractClientRegisterManager {
 			consoleUrl = gatewayProperties.getConsoleUrl();
 		}
 
-		if (gatewayProperties.getEnv() != null) {
-			env = gatewayProperties.getEnv();
-		}
 	}
 
 	/**

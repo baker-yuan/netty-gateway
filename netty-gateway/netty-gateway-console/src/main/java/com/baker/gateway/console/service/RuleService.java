@@ -51,16 +51,28 @@ public class RuleService {
      */
 	public void addOrUpdateToDb(Rule rule) throws Exception {
 		if (rule.getId() == null || rule.getId() == 0) {
-			addRuleToCache(rule);
 			try {
-				ruleMapper.insert(modelToEntity(rule));
+				RuleEntity entity = modelToEntity(rule);
+				entity.setDraft(JSONUtil.toJSONString(rule));
+				ruleMapper.insert(entity);
 			} catch (DuplicateKeyException ignore) {
 				log.info("addRule duplicateKey ruleId: {}", rule.getId());
 			}
 		} else {
 			ruleMapper.update(modelToEntity(rule));
-			updateRuleToCache(rule);
 		}
+	}
+
+	public void publish(Integer id) throws Exception {
+		RuleEntity entity = ruleMapper.selectById(id);
+		RuleEntity update = RuleEntity
+				.builder()
+				.id(id)
+				.draft("")
+				.build();
+		ruleMapper.update(update);
+
+		addRuleToCache(entityToModel(entity));
 	}
 
 	public void deleteRuleToDb(String id) {
@@ -97,15 +109,6 @@ public class RuleService {
 	}
 	
 
-	public void updateRuleToCache(Rule rule) throws Exception {
-		String path = RegistryService.PATH 
-				+ namespace
-				+ RegistryService.RULE_PREFIX;	
-		String key = path + RegistryService.PATH + rule.getId();
-		String value = FastJsonConvertUtil.convertObjectToJSON(rule);
-		registryService.registerPersistentNode(key, value);
-	}
-
 
 	public void deleteRuleToCache(String ruleId) {
 		String path = RegistryService.PATH 
@@ -114,5 +117,6 @@ public class RuleService {
 		String key = path + RegistryService.PATH + ruleId;
 		registryService.deleteByKey(key);
 	}
+
 
 }

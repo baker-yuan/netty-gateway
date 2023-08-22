@@ -29,14 +29,16 @@ public class ServiceInstanceService {
 	 * 注册服务实例方法
 	 */
 	protected void registerServiceInstance(ServiceInstance serviceInstance) throws Exception {
-		String key = namespace
+		String key = Registry.PATH
+				+ namespace
+				+ Registry.INSTANCE_PREFIX
 				+ Registry.PATH
 				+ serviceInstance.getServiceId()
 				+ Registry.PATH
 				+ serviceInstance.getServiceInstanceId();
 		if(!registryService.isExistKey(key)) {
 			String value = FastJsonConvertUtil.convertObjectToJSON(serviceInstance);
-			registryService.registerPathIfNotExists(key, value, false);
+			registryService.registerPathIfNotExists(key, value, true);
 		}
 	}
 

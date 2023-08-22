@@ -28,8 +28,6 @@ public class GatewayConfig {
 	// 网关的命名空间
 	private String namespace = "netty-gateway";
 
-	// env dev test prod
-	private String env = "dev";
 
 	// 网关服务器的CPU核数映射的线程数
 	private int processThread = Runtime.getRuntime().availableProcessors();

@@ -1,22 +1,15 @@
 package com.baker.gateway.console.init;
 
-import com.baker.gateway.common.constants.BasicConst;
 import com.baker.gateway.common.util.ServiceLoader;
+import com.baker.gateway.console.GatewayConsoleProperties;
 import com.baker.gateway.discovery.api.RegistryService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import com.baker.gateway.discovery.api.Registry;
 
-// https://github.com/baker-yuan/netty-gateway/blob/3b0376df665959c325db7d5e8f217059528ef353/netty-gateway/netty-gateway-client/src/main/java/com/baker/gateway/client/core/AbstractClientRegisterManager.java
 public class InitEtcdDir implements CommandLineRunner {
 
-    @Value("${gateway.console.registryAddress}")
     private String registryAddress;
-    @Value("${gateway.console.namespace}")
     private String namespace;
-
-    @Value("${gateway.console.env}")
-    private String env;
 
     /**
      * 跟路径
@@ -42,7 +35,10 @@ public class InitEtcdDir implements CommandLineRunner {
     private RegistryService registryService;
 
 
-    public InitEtcdDir() throws Exception {
+    public InitEtcdDir(GatewayConsoleProperties properties) throws Exception {
+        this.namespace = properties.getNamespace();
+        this.registryAddress = properties.getRegistryAddress();
+
         //	1. 初始化加载注册中心对象
         ServiceLoader<RegistryService> serviceLoader = ServiceLoader.load(RegistryService.class);
         RegistryService registryService = serviceLoader.iterator().next();
@@ -50,7 +46,7 @@ public class InitEtcdDir implements CommandLineRunner {
         this.registryService = registryService;
 
         //	2. 注册构建顶级目录结构
-        generatorStructPath(Registry.PATH + namespace + BasicConst.BAR_SEPARATOR + env);
+        generatorStructPath(Registry.PATH + namespace);
     }
 
     /**

@@ -10,16 +10,10 @@ import lombok.Data;
 @Data
 @ConfigurationProperties(prefix = GatewayProperties.GATEWAY_PREFIX)
 public class GatewayProperties {
-
 	public static final String GATEWAY_PREFIX = "gateway";
 
 	/**
 	 * 控制台地址
 	 */
 	private String consoleUrl;
-
-	/**
-	 * 	环境属性
-	 */
-	private String env = "dev";
 }

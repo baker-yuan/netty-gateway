@@ -53,7 +53,7 @@ curl --location --request GET 'http://127.0.0.1:9005/serviceInvoker/getListByUni
 ## 2、添加规则
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
+curl --location --request POST 'http://127.0.0.1:9005/rule/addOrUpdate' \
 --header 'uniqueId: hello:1.0.0' \
 --header 'Cookie: uid=1; uid=1' \
 --header 'Content-Type: application/json' \
@@ -76,7 +76,7 @@ curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
             "id": "timeoutPreFilter"
         }
     ],
-    "id": "1",
+    "id": 0,
     "name": "测试",
     "order": 1,
     "protocol": "http",
@@ -89,7 +89,7 @@ curl --location --request POST 'http://127.0.0.1:9005/rule/add' \
 ## 3、服务绑定规则
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?serviceId=hello&invokerPath=/testMvc/testGet&ruleId=1&namespace=netty-gateway-dev' \
+curl --location --request POST 'http://127.0.0.1:9005/serviceInvoker/bindingRuleId?serviceId=hello&invokerPath=/testMvc/testGet&ruleId=5' \
 --header 'uniqueId: hello:1.0.0' \
 --header 'Cookie: uid=1; uid=1; uid=1' \
 --header 'Content-Type: application/json' \
@@ -110,6 +110,32 @@ curl --location --request GET 'http://127.0.0.1:8083/testMvc/testGet'
 
 ```bash
 curl --location --request GET 'http://127.0.0.1:8888/testMvc/testGet'
+```
+
+
+
+
+
+```bash
+curl --location --request PUT 'http://127.0.0.1:9005/serviceDefinition/publish' \
+--header 'uniqueId: hello:1.0.0' \
+--header 'Cookie: uid=1; uid=1; uid=1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "serviceId": "hello"
+}'
+```
+
+
+
+```bash
+curl --location --request PUT 'http://127.0.0.1:9005/rule/publish' \
+--header 'uniqueId: hello:1.0.0' \
+--header 'Cookie: uid=1; uid=1; uid=1; uid=1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id": 4
+}'
 ```
 
 

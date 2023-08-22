@@ -81,7 +81,7 @@ public class RegistryManager {
 		this.gatewayConfig = gatewayConfig;
 
 		//	1. 路径的设置
-		superPath = Registry.PATH + gatewayConfig.getNamespace() + BasicConst.BAR_SEPARATOR + gatewayConfig.getEnv();
+		superPath = Registry.PATH + gatewayConfig.getNamespace();
 		servicesPath = superPath + Registry.SERVICE_PREFIX;
 		instancesPath = superPath + Registry.INSTANCE_PREFIX;
 		rulesPath = superPath + Registry.RULE_PREFIX;

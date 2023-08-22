@@ -10,9 +10,9 @@
         <result column="draft" property="draft" jdbcType="VARCHAR" />
     </resultMap>
 
-    <insert id="insert" parameterType="com.baker.gateway.console.entity.RuleEntity">
-        INSERT INTO rule_entity (id, name, order, filter_configs, draft)
-        VALUES (#{id}, #{name}, #{order}, #{filterConfigs}, #{draft})
+    <insert id="insert" parameterType="com.baker.gateway.console.entity.RuleEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO rule_entity (`name`, `order`, filter_configs, draft)
+        VALUES (#{name}, #{order}, #{filterConfigs}, #{draft})
     </insert>
 
     <update id="update" parameterType="com.baker.gateway.console.entity.RuleEntity">
@@ -30,7 +30,7 @@
         DELETE FROM rule_entity WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT * FROM rule_entity WHERE id = #{id}
     </select>
 

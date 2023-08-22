@@ -21,23 +21,20 @@ import com.baker.gateway.client.support.springmvc.SpringMVCClientRegisterManager
  */
 @Configuration
 @EnableConfigurationProperties(GatewayProperties.class)
-@ConditionalOnProperty(prefix = GatewayProperties.GATEWAY_PREFIX, name = {"registryAddress", "namespace"})
+@ConditionalOnProperty(prefix = GatewayProperties.GATEWAY_PREFIX, name = {"consoleUrl"})
 public class GatewayClientAutoConfiguration {
 
-	@Autowired
-	private GatewayProperties gatewayProperties;
-	
 	@Bean
 	@ConditionalOnClass({Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class})
 	@ConditionalOnMissingBean(SpringMVCClientRegisterManager.class)
-	public SpringMVCClientRegisterManager springMVCClientRegisterManager() throws Exception {
+	public SpringMVCClientRegisterManager springMVCClientRegisterManager(GatewayProperties gatewayProperties) throws Exception {
 		return new SpringMVCClientRegisterManager(gatewayProperties);
 	}
 	
 	@Bean
 	@ConditionalOnClass({ServiceBean.class})
 	@ConditionalOnMissingBean(Dubbo27ClientRegisterManager.class)
-	public Dubbo27ClientRegisterManager dubbo27ClientRegisterManager() throws Exception {
+	public Dubbo27ClientRegisterManager dubbo27ClientRegisterManager(GatewayProperties gatewayProperties) throws Exception {
 		return new Dubbo27ClientRegisterManager(gatewayProperties);
 	}
 	

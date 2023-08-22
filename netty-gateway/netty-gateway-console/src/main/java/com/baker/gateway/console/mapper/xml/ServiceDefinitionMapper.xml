@@ -11,7 +11,7 @@
         <result column="draft" property="draft" jdbcType="VARCHAR" />
     </resultMap>
 
-    <insert id="insert" parameterType="com.baker.gateway.console.entity.ServiceDefinitionEntity">
+    <insert id="insert" parameterType="com.baker.gateway.console.entity.ServiceDefinitionEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO service_definition_entity (service_id, base_path, protocol, enable, invoker_map, draft)
         VALUES (#{serviceId}, #{basePath}, #{protocol}, #{enable}, #{invokerMap}, #{draft})
     </insert>

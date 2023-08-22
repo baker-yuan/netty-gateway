@@ -3,6 +3,7 @@ package com.baker.gateway.console.web;
 import java.util.List;
 
 import com.baker.gateway.console.dto.RuleDTO;
+import com.baker.gateway.console.dto.ServiceDefinitionDTO;
 import com.baker.gateway.console.service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +33,15 @@ public class RuleController {
         rule.setOrder(ruleDTO.getOrder());
         rule.setFilterConfigs(ruleDTO.getFilterConfigs());
         ruleService.addOrUpdateToDb(rule);
+    }
+
+
+    /**
+     * 发布
+     */
+    @PutMapping("/rule/publish")
+    public void publish(@RequestBody @Validated RuleDTO.PublishDTO req) throws Exception {
+        ruleService.publish(req.getId());
     }
 
     @DeleteMapping("/rule/delete")

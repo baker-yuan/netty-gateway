@@ -10,6 +10,6 @@ public interface RuleMapper {
     void insert(RuleEntity ruleEntity);
     Integer update(RuleEntity ruleEntity);
     void delete(String id);
-    RuleEntity selectById(String id);
+    RuleEntity selectById(Integer id);
     List<RuleEntity> selectAll();
 }

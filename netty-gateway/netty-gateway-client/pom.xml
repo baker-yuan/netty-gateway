@@ -23,25 +23,13 @@
 			<version>${netty-gateway-commonn.version}</version>
 		</dependency>
 
-		<!-- 控制台
+		<!-- 控制台 -->
 		<dependency>
 			<groupId>com.baker</groupId>
 			<artifactId>netty-gateway-console</artifactId>
 			<version>${netty-gateway-console.version}</version>
 		</dependency>
-		-->
 
-		<!-- 注册中心 -->
-		<dependency>
-			<groupId>com.baker</groupId>
-			<artifactId>netty-gateway-discovery-api</artifactId>
-			<version>${netty-gateway-discovery-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.baker</groupId>
-			<artifactId>netty-gateway-discovery-etcd</artifactId>
-			<version>${netty-gateway-discovery-etcd.version}</version>
-		</dependency>
 
 
 		<dependency>

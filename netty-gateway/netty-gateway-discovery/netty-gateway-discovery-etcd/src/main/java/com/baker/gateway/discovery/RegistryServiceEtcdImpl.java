@@ -90,6 +90,14 @@ public class RegistryServiceEtcdImpl implements RegistryService {
 
     }
 
+    /**
+     * 注册临时节点
+     *
+     * @param key
+     * @param value
+     * @return
+     * @throws Exception
+     */
     @Override
     public long registerEphemeralNode(String key, String value) throws Exception {
         long leaseId = this.etcdClient.getHeartBeatLeaseId();
@@ -101,8 +109,10 @@ public class RegistryServiceEtcdImpl implements RegistryService {
     public void registerPathIfNotExists(String path, String value, boolean isPersistent) throws Exception {
         if (!isExistKey(path)) {
             if (isPersistent) {
+                // 永久节点
                 registerPersistentNode(path, value);
             } else {
+                // 非永久节点
                 registerEphemeralNode(path, value);
             }
         }

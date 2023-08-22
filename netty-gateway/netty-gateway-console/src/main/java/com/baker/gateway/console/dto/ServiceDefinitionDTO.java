@@ -50,10 +50,7 @@ public class ServiceDefinitionDTO {
 		 */
 		private String protocol;
 
-		/**
-		 * 环境名称
-		 */
-		private String envType;
+
 
 		/**
 		 * 服务启用禁用

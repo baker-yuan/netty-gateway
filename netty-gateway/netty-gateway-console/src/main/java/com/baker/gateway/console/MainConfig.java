@@ -20,11 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @ConditionalOnProperty(prefix = GatewayConsoleProperties.GATEWAY_CONSOLE_PREFIX, name = {"registryAddress", "namespace"})
 public class MainConfig {
 
-	@Autowired
-	private GatewayConsoleProperties gatewayProperties;
-	
 	@Bean
-	public RegistryService registryService() {
+	public RegistryService registryService(GatewayConsoleProperties gatewayProperties) {
 		ServiceLoader<RegistryService> serviceLoader = ServiceLoader.load(RegistryService.class);
 		for(RegistryService registryService : serviceLoader) {
 			registryService.initialized(gatewayProperties.getRegistryAddress());
@@ -54,8 +51,8 @@ public class MainConfig {
 	}
 
 	@Bean
-	InitEtcdDir initEtcdDir() throws Exception {
-		return new InitEtcdDir();
+	InitEtcdDir initEtcdDir(GatewayConsoleProperties properties) throws Exception {
+		return new InitEtcdDir(properties);
 	}
 	
 }

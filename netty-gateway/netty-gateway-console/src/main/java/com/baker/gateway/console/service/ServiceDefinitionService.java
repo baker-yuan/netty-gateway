@@ -71,11 +71,7 @@ public class ServiceDefinitionService {
 		ServiceDefinitionEntity dbEntity = serviceDefinitionMapper.selectById(serviceId);
 		ServiceDefinitionEntity update = ServiceDefinitionEntity
 				.builder()
-				.serviceId(dbEntity.getServiceId())
-				.basePath(dbEntity.getBasePath())
-				.protocol(dbEntity.getProtocol())
-				.enable(dbEntity.getEnable())
-				.invokerMap(dbEntity.getInvokerMap())
+				.serviceId(serviceId)
 				.draft("")
 				.build();
 		serviceDefinitionMapper.update(update);
@@ -139,7 +135,9 @@ public class ServiceDefinitionService {
 	 * 注册服务定义对象
 	 */
 	protected void registerServiceDefinition(ServiceDefinition serviceDefinition) throws Exception {
-		String key = namespace
+		String key = Registry.PATH +
+				namespace
+				+ Registry.SERVICE_PREFIX
 				+ Registry.PATH
 				+ serviceDefinition.getServiceId();
 		if(!registryService.isExistKey(key)) {

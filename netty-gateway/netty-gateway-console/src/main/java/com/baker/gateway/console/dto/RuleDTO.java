@@ -22,11 +22,22 @@ public class RuleDTO {
 	@Builder
 	@NoArgsConstructor
 	@AllArgsConstructor
+	public static class PublishDTO  {
+		/**
+		 * 规则ID
+		 */
+		private Integer id;
+
+	}
+
+	@Data
+	@Builder
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class AddOrUpdateRuleDTO {
 		/**
 		 * 规则ID
 		 */
-		@NotBlank
 		private Integer id;
 
 		/**
