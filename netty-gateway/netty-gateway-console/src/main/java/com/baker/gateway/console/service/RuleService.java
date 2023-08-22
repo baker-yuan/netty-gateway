@@ -1,6 +1,5 @@
 package com.baker.gateway.console.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.baker.gateway.common.util.JSONUtil;
@@ -8,19 +7,20 @@ import com.baker.gateway.console.entity.RuleEntity;
 import com.baker.gateway.console.mapper.RuleMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.baker.gateway.common.config.Rule;
 import com.baker.gateway.common.util.FastJsonConvertUtil;
-import com.baker.gateway.common.util.Pair;
 import com.baker.gateway.discovery.api.RegistryService;
 
 
+@Slf4j
 @Service
 public class RuleService {
-
 
 	@Value("${gateway.console.namespace}")
 	private String namespace;
@@ -33,7 +33,6 @@ public class RuleService {
 
 	@Autowired
 	private RuleMapper ruleMapper;
-
 
 	/**
 	 * 获取所有的规则列表
@@ -48,18 +47,25 @@ public class RuleService {
 	}
 
     /**
-     * 添加规则
+     * 添加修改规则
      */
 	public void addOrUpdateToDb(Rule rule) throws Exception {
-		if (rule.getId() == null) {
-			ruleMapper.insert(modelToEntity(rule));
+		if (rule.getId() == null || rule.getId() == 0) {
+			addRuleToCache(rule);
+			try {
+				ruleMapper.insert(modelToEntity(rule));
+			} catch (DuplicateKeyException ignore) {
+				log.info("addRule duplicateKey ruleId: {}", rule.getId());
+			}
 		} else {
 			ruleMapper.update(modelToEntity(rule));
+			updateRuleToCache(rule);
 		}
 	}
 
 	public void deleteRuleToDb(String id) {
 		ruleMapper.delete(id);
+		deleteRuleToCache(id);
 	}
 
 	private Rule entityToModel(RuleEntity ruleEntity) {
@@ -81,32 +87,7 @@ public class RuleService {
 	}
 
 
-	/** ------------------------------- -------------------------------**/
-
-
-	/**
-	 * 获取所有的规则列表
-	 */
-	public List<Rule> getRuleList() throws Exception {
-		String path = RegistryService.PATH 
-				+ namespace
-				+ RegistryService.RULE_PREFIX;
-		List<Pair<String, String>> list = registryService.getListByPrefixKey(path);
-		List<Rule> rules = new ArrayList<>();
-		for(Pair<String, String> pair : list) {
-			String p = pair.getKey();
-			if (p.equals(path)) { 
-				continue;
-			}
-			String json = pair.getValue();
-			Rule rule = FastJsonConvertUtil.convertJSONToObject(json, Rule.class);
-			rules.add(rule);
-		}
-		return rules;
-	}
-
-
-	public void addRule(Rule rule) throws Exception {
+	public void addRuleToCache(Rule rule) throws Exception {
 		String path = RegistryService.PATH 
 				+ namespace
 				+ RegistryService.RULE_PREFIX;	
@@ -116,7 +97,7 @@ public class RuleService {
 	}
 	
 
-	public void updateRule(Rule rule) throws Exception {
+	public void updateRuleToCache(Rule rule) throws Exception {
 		String path = RegistryService.PATH 
 				+ namespace
 				+ RegistryService.RULE_PREFIX;	
@@ -126,13 +107,12 @@ public class RuleService {
 	}
 
 
-	public void deleteRule(String ruleId) {
+	public void deleteRuleToCache(String ruleId) {
 		String path = RegistryService.PATH 
 				+ namespace
 				+ RegistryService.RULE_PREFIX;	
 		String key = path + RegistryService.PATH + ruleId;
 		registryService.deleteByKey(key);
 	}
-
 
 }

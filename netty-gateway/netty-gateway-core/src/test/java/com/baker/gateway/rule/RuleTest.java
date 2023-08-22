@@ -18,7 +18,7 @@ public class RuleTest {
 	@Test
 	public void testHttpRule1() {
 		Rule rule = new Rule();
-		rule.setId("1");
+		rule.setId(1);
 		rule.setName("测试规则1");
 		rule.setOrder(1);
 
@@ -71,7 +71,7 @@ public class RuleTest {
 	public void testDubboRule2() {
 		
 		Rule rule = new Rule();
-		rule.setId("2");
+		rule.setId(2);
 		rule.setName("测试规则2");
 		rule.setOrder(2);
 
@@ -123,7 +123,7 @@ public class RuleTest {
 	@Test
 	public void testHttpRule3() {
 		Rule rule = new Rule();
-		rule.setId("1");
+		rule.setId(1);
 		rule.setName("测试规则1");
 		rule.setOrder(1);
 
@@ -185,7 +185,7 @@ public class RuleTest {
 	public void testDubboRule4() {
 		
 		Rule rule = new Rule();
-		rule.setId("2");
+		rule.setId(2);
 		rule.setName("测试规则2");
 		rule.setOrder(2);
 

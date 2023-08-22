@@ -21,7 +21,7 @@ public class Rule implements Comparable<Rule>, Serializable {
     /**
      * 规则ID(全局唯一)
      */
-    private String id;
+    private Integer id;
 
     /**
      * 规则名称
@@ -39,7 +39,7 @@ public class Rule implements Comparable<Rule>, Serializable {
     private Set<Rule.FilterConfig> filterConfigs = new HashSet<>();
 
 
-    public Rule(String id, String name, Integer order, Set<FilterConfig> filterConfigs) {
+    public Rule(Integer id, String name, Integer order, Set<FilterConfig> filterConfigs) {
         this.id = id;
         this.name = name;
         this.order = order;

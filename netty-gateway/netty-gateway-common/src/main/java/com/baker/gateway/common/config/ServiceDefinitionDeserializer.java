@@ -44,7 +44,7 @@ public class ServiceDefinitionDeserializer extends StdDeserializer<ServiceDefini
                     JsonNode value = field.getValue();
                     HttpServiceInvoker httpServiceInvoker = new HttpServiceInvoker();
                     httpServiceInvoker.setInvokerPath(value.get("invokerPath").asText(""));
-                    httpServiceInvoker.setRuleId(value.get("ruleId").asText(""));
+                    httpServiceInvoker.setRuleId(value.get("ruleId").asInt(0));
                     httpServiceInvoker.setTimeout(value.get("timeout").asInt(3000));
                     invokerMap.put(path, httpServiceInvoker);
                 }
@@ -57,7 +57,7 @@ public class ServiceDefinitionDeserializer extends StdDeserializer<ServiceDefini
 
                     DubboServiceInvoker dubboServiceInvoker = new DubboServiceInvoker();
                     dubboServiceInvoker.setInvokerPath(value.get("invokerPath").asText(""));
-                    dubboServiceInvoker.setRuleId(value.get("ruleId").asText(""));
+                    dubboServiceInvoker.setRuleId(value.get("ruleId").asInt(0));
                     dubboServiceInvoker.setTimeout(value.get("timeout").asInt(3000));
 
 

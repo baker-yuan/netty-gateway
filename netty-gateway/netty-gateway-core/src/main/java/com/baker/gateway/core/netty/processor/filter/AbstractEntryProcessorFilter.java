@@ -56,7 +56,7 @@ public abstract class AbstractEntryProcessorFilter<FilterConfigClass> extends Ab
 		FilterConfig filterConfig = ctx.getRule().getFilterConfig(filterAnnotation.id());
 		
 		// 定义一个cacheKey
-		String ruleId = ctx.getRule().getId();
+		Integer ruleId = ctx.getRule().getId();
 		String cacheKey = ruleId + BasicConst.DOLLAR_SEPARATOR + filterAnnotation.id();
 		
 		FilterConfigClass fcc = cache.getIfPresent(cacheKey);

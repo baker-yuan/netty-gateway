@@ -13,7 +13,7 @@ public class RuleEntity {
     /**
      * 规则ID(全局唯一)
      */
-    private String id;
+    private Integer id;
 
     /**
      * 规则名称

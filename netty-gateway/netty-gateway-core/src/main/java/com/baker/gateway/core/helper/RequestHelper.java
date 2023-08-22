@@ -51,8 +51,8 @@ public class RequestHelper {
 
 		//	4. 根据请求对象获取服务定义对应的方法调用，然后获取对应的规则
 		ServiceInvoker serviceInvoker = pair.getKey();
-		String ruleId = serviceInvoker.getRuleId();
-		if (ruleId == null) {
+		Integer ruleId = serviceInvoker.getRuleId();
+		if (ruleId == null || ruleId == 0) {
 			throw new GatewayNotFoundException(ResponseCode.RULE_NOT_CONFIG);
 		}
 		Rule rule = DynamicConfigManager.getInstance().getRule(ruleId);

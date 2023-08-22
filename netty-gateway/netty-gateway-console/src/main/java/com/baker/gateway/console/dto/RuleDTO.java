@@ -27,7 +27,7 @@ public class RuleDTO {
 		 * 规则ID
 		 */
 		@NotBlank
-		private String id;
+		private Integer id;
 
 		/**
 		 * 规则名称

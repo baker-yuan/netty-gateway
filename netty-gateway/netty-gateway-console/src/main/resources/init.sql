@@ -16,7 +16,7 @@ CREATE TABLE `service_definition_entity`
 
 CREATE TABLE `rule_entity`
 (
-    `id`             varchar(255) NOT NULL COMMENT '规则ID',
+    `id`             int(10) UNSIGNED AUTO_INCREMENT COMMENT '规则ID',
     `name`           varchar(255) DEFAULT '' COMMENT '规则名称',
     `order`          int(11)      DEFAULT '0' COMMENT '规则排序',
     `filter_configs` text COMMENT '规则集合定义',

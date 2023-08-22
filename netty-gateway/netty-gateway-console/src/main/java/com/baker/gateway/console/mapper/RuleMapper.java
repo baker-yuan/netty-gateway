@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface RuleMapper {
     void insert(RuleEntity ruleEntity);
-    void update(RuleEntity ruleEntity);
+    Integer update(RuleEntity ruleEntity);
     void delete(String id);
     RuleEntity selectById(String id);
     List<RuleEntity> selectAll();

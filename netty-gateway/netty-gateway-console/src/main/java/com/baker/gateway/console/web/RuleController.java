@@ -34,7 +34,7 @@ public class RuleController {
         ruleService.addOrUpdateToDb(rule);
     }
 
-    @PostMapping("/rule/delete")
+    @DeleteMapping("/rule/delete")
     public void deleteRule(@RequestBody @Validated RuleDTO.DeleteRuleDTO ruleDTO) {
         ruleService.deleteRuleToDb(ruleDTO.getId());
     }

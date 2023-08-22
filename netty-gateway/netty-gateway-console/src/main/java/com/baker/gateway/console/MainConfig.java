@@ -2,6 +2,7 @@ package com.baker.gateway.console;
 
 import java.util.ServiceLoader;
 
+import com.baker.gateway.console.init.InitEtcdDir;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -50,6 +51,11 @@ public class MainConfig {
 			return null;
 		}
 		return consumerContainer(gatewayProperties);
+	}
+
+	@Bean
+	InitEtcdDir initEtcdDir() throws Exception {
+		return new InitEtcdDir();
 	}
 	
 }

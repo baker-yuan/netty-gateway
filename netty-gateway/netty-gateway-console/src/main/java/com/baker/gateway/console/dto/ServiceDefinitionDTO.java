@@ -13,6 +13,18 @@ import java.util.Map;
  */
 public class ServiceDefinitionDTO {
 
+
+	@Data
+	@Builder
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class PublishDTO  {
+		/**
+		 * 服务唯一id
+		 */
+		private String serviceId;
+	}
+
 	@Data
 	@Builder
 	@NoArgsConstructor

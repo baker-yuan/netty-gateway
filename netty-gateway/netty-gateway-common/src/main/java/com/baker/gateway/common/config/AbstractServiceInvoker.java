@@ -11,7 +11,7 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 	/**
 	 * 规则id
 	 */
-	protected String ruleId;
+	protected Integer ruleId;
 	/**
 	 * 调用接口超时时间
 	 */
@@ -28,12 +28,12 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 	}
 
 	@Override
-	public String getRuleId() {
+	public Integer getRuleId() {
 		return ruleId;
 	}
 
 	@Override
-	public void setRuleId(String ruleId) {
+	public void setRuleId(Integer ruleId) {
 		this.ruleId = ruleId;		
 	}
 

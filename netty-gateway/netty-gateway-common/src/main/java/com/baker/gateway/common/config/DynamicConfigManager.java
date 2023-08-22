@@ -33,7 +33,7 @@ public class DynamicConfigManager {
     /**
      * 规则集合 key=ruleId value=规则
      */
-    private final ConcurrentHashMap<String, Rule> ruleMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, Rule> ruleMap = new ConcurrentHashMap<>();
 
     private DynamicConfigManager() {
     }
@@ -128,11 +128,11 @@ public class DynamicConfigManager {
 
     /***************** 	对规则缓存进行操作的系列方法 	***************/
 
-    public void putRule(String ruleId, Rule rule) {
+    public void putRule(Integer ruleId, Rule rule) {
         ruleMap.put(ruleId, rule);
     }
 
-    public Rule getRule(String ruleId) {
+    public Rule getRule(Integer ruleId) {
         Rule rule = ruleMap.get(ruleId);
         if (rule == null) {
             throw new GatewayNotFoundException(ResponseCode.FILTER_CONFIG_PARSE_ERROR);
@@ -144,7 +144,7 @@ public class DynamicConfigManager {
         ruleMap.remove(ruleId);
     }
 
-    public ConcurrentHashMap<String, Rule> getRuleMap() {
+    public ConcurrentHashMap<Integer, Rule> getRuleMap() {
         return ruleMap;
     }
 

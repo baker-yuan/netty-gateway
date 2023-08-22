@@ -2,6 +2,8 @@ package com.baker.gateway.console.entity;
 
 import lombok.*;
 
+import java.util.Objects;
+
 /**
  * 资源服务定义类，无论下游是什么样的服务都需要进行注册
  */
@@ -39,4 +41,29 @@ public class ServiceDefinitionEntity {
      * 草稿
      */
     private String draft;
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        // todo invokerMap比对
+        ServiceDefinitionEntity entity = (ServiceDefinitionEntity) obj;
+        return Objects.equals(serviceId, entity.getServiceId()) &&
+                Objects.equals(basePath, entity.getBasePath()) &&
+                Objects.equals(protocol, entity.getProtocol()) &&
+                Objects.equals(enable, entity.getEnable()) &&
+                Objects.equals(invokerMap, entity.getInvokerMap());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceId, basePath, protocol, enable);
+    }
+
 }

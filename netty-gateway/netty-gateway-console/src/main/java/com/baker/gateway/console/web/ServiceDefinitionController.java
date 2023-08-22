@@ -20,6 +20,22 @@ public class ServiceDefinitionController {
 	private ServiceDefinitionService serviceDefinitionService;
 
 	/**
+	 * 客户端上报
+	 */
+	@PostMapping("/serviceDefinition/report")
+	public void addOrUpdateServiceDefinitionToDb(@RequestBody @Validated ServiceDefinition req) throws Exception {
+		serviceDefinitionService.report(req);
+	}
+
+	/**
+	 * 发布
+	 */
+	@PutMapping("/serviceDefinition/publish")
+	public void addOrUpdateServiceDefinitionToDb(@RequestBody @Validated ServiceDefinitionDTO.PublishDTO req) throws Exception {
+		serviceDefinitionService.publish(req.getServiceId());
+	}
+
+	/**
 	 * 获取服务定义列表
 	 */
 	@GetMapping("/serviceDefinition/getList")
@@ -28,51 +44,9 @@ public class ServiceDefinitionController {
 	}
 
 
-	@PostMapping("/serviceDefinition/report")
-	public void addOrUpdateServiceDefinitionToDb(@RequestBody @Validated ServiceDefinition req) throws Exception {
-		serviceDefinitionService.report(req);
-	}
-
-
-
 	@PostMapping("/serviceDefinition/delete")
 	public void deleteServiceDefinition(@RequestBody @Validated ServiceDefinitionDTO.DeleteServiceDefinitionDTO req) {
-		serviceDefinitionService.deleteServiceDefinition(req.getServiceId());
+		serviceDefinitionService.deleteServiceDefinitionByDb(req.getServiceId());
 	}
 
-
-
-
-
-
-
-
-
-
-
-	
-//	/**
-//	 * 根据serviceId更新服务定义PatternPath信息
-//	 */
-//	@RequestMapping("/serviceDefinition/updatePatternPathByServiceId")
-//	public void updatePatternPathByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
-//		if(serviceDefinitionDTO != null && serviceDefinitionDTO.getPatternPath()!= null) {
-//			serviceDefinitionService.updatePatternPathByServiceId(
-//					serviceDefinitionDTO.getServiceId(),
-//					serviceDefinitionDTO.getPatternPath());
-//		}
-//	}
-//
-//	/**
-//	 * 根据serviceId更新服务定义PatternPath信息
-//	 */
-//	@RequestMapping("/serviceDefinition/updateEnableByServiceId")
-//	public void updateEnableByServiceId(@RequestBody ServiceDefinitionDTO serviceDefinitionDTO) throws Exception {
-//		if(serviceDefinitionDTO != null) {
-//			serviceDefinitionService.updateEnableByServiceId(
-//					serviceDefinitionDTO.getServiceId(),
-//					serviceDefinitionDTO.isEnable());
-//		}
-//	}
-	
 }

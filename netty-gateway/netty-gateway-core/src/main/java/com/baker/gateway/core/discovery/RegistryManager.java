@@ -192,8 +192,7 @@ public class RegistryManager {
 		serviceDefinition.setProtocol((String)jsonMap.get("protocol"));
 		serviceDefinition.setVersion((String)jsonMap.get("version"));
 		serviceDefinition.setEnable((boolean)jsonMap.get("enable"));
-		serviceDefinition.setEnvType((String)jsonMap.get("envType"));
-		
+
 		Map<String, ServiceInvoker> invokerMap = new HashMap<>();
 		JSONObject jsonInvokerMap = (JSONObject)jsonMap.get("invokerMap");
 		
@@ -259,7 +258,7 @@ public class RegistryManager {
 			//	如果是规则发生变更
 			if(key.contains(rulesPath)) {
 				//	Rule
-				String ruleId = key.substring(rulesPath.length() + 1);
+				Integer ruleId = Integer.parseInt(key.substring(rulesPath.length() + 1));
 				Rule rule = FastJsonConvertUtil.convertJSONToObject(value, Rule.class);
 				DynamicConfigManager.getInstance().putRule(ruleId, rule);
 				return;

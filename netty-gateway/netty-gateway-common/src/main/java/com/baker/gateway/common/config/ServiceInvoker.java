@@ -15,8 +15,8 @@ public interface ServiceInvoker {
 	/**
 	 * 获取指定服务调用绑定的唯一规则
 	 */
-	String getRuleId();
-	void setRuleId(String ruleId);
+	Integer getRuleId();
+	void setRuleId(Integer ruleId);
 	
 	/**
 	 * 获取该服务调用(方法)的超时时间
