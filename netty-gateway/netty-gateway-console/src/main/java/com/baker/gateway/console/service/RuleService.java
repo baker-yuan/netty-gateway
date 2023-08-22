@@ -65,12 +65,8 @@ public class RuleService {
 
 	public void publish(Integer id) throws Exception {
 		RuleEntity entity = ruleMapper.selectById(id);
-		RuleEntity update = RuleEntity
-				.builder()
-				.id(id)
-				.draft("")
-				.build();
-		ruleMapper.update(update);
+		entity.setDraft("");
+		ruleMapper.update(entity);
 
 		addRuleToCache(entityToModel(entity));
 	}

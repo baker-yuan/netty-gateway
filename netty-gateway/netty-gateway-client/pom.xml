@@ -23,14 +23,6 @@
 			<version>${netty-gateway-commonn.version}</version>
 		</dependency>
 
-		<!-- 控制台 -->
-		<dependency>
-			<groupId>com.baker</groupId>
-			<artifactId>netty-gateway-console</artifactId>
-			<version>${netty-gateway-console.version}</version>
-		</dependency>
-
-
 
 		<dependency>
 			<groupId>cn.hutool</groupId>

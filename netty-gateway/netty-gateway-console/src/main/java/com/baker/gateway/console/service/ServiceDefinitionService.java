@@ -69,13 +69,10 @@ public class ServiceDefinitionService {
 	 */
 	public void publish(String serviceId) throws Exception {
 		ServiceDefinitionEntity dbEntity = serviceDefinitionMapper.selectById(serviceId);
-		ServiceDefinitionEntity update = ServiceDefinitionEntity
-				.builder()
-				.serviceId(serviceId)
-				.draft("")
-				.build();
-		serviceDefinitionMapper.update(update);
-		registerServiceDefinition(entityToModel(update));
+		dbEntity.setDraft("");
+		serviceDefinitionMapper.update(dbEntity);
+
+		registerServiceDefinition(entityToModel(dbEntity));
 	}
 
 	public List<ServiceDefinition> getServiceDefinitionByDb() {
