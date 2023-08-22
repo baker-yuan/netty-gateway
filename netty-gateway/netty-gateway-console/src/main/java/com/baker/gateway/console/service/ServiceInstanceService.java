@@ -38,7 +38,7 @@ public class ServiceInstanceService {
 				+ serviceInstance.getServiceInstanceId();
 		if(!registryService.isExistKey(key)) {
 			String value = FastJsonConvertUtil.convertObjectToJSON(serviceInstance);
-			registryService.registerPathIfNotExists(key, value, true);
+			registryService.registerPathIfNotExists(key, value, false);
 		}
 	}
 

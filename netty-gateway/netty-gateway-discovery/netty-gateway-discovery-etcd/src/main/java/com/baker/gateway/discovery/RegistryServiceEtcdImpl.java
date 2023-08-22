@@ -41,6 +41,7 @@ public class RegistryServiceEtcdImpl implements RegistryService {
         //	添加异常的过期处理监听
         etcdClient.addHeartBeatLeaseTimeoutNotifyListener(() -> cachedMap.forEach((key, value) -> {
             try {
+                // 重新注册
                 registerEphemeralNode(key, value);
             } catch (Exception e) {
                 //	ignore

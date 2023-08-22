@@ -48,7 +48,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class EtcdClientImpl implements EtcdClient {
-	
+	/**
+	 * 临时节点有效期5s
+	 */
 	private static final int LEASE_TIME = 5;
 	
 	private Client client;
