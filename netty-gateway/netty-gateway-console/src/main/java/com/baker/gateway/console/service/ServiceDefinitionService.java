@@ -77,18 +77,17 @@ public class ServiceDefinitionService {
 				Map<String, HttpServiceInvoker> reportHttpInvokerMap = JSONUtil.parse(updateEntity.getInvokerMap(), new TypeReference<Map<String, HttpServiceInvoker>>() {});
 				// 相等判断
 				if (dbHttpInvokerMap.size() == reportHttpInvokerMap.size()) {
+					boolean equals = true;
 					// 遍历上报数据
 					for (Map.Entry<String, HttpServiceInvoker> entry : reportHttpInvokerMap.entrySet()) {
-						// db里面也有
-						boolean equals = true;
 						if (dbHttpInvokerMap.containsKey(entry.getKey())) {
 							if (!dbHttpInvokerMap.get(entry.getKey()).bizEquals(entry.getValue())) {
 								equals = false;
 							}
 						}
-						if (equals) {
-							return true;
-						}
+					}
+					if (equals) {
+						return true;
 					}
 				}
 				// 不相等
@@ -107,18 +106,17 @@ public class ServiceDefinitionService {
 				Map<String, DubboServiceInvoker> reportDoubleInvokerMap = JSONUtil.parse(updateEntity.getInvokerMap(), new TypeReference<Map<String, DubboServiceInvoker>>() {});
 				// 相等判断
 				if (dbDoubleInvokerMap.size() == reportDoubleInvokerMap.size()) {
+					boolean equals = true;
 					// 遍历上报数据
 					for (Map.Entry<String, DubboServiceInvoker> entry : reportDoubleInvokerMap.entrySet()) {
-						// db里面也有
-						boolean equals = true;
 						if (dbDoubleInvokerMap.containsKey(entry.getKey())) {
 							if (!dbDoubleInvokerMap.get(entry.getKey()).bizEquals(entry.getValue())) {
 								equals = false;
 							}
 						}
-						if (equals) {
-							return true;
-						}
+					}
+					if (equals) {
+						return true;
 					}
 				}
 				// 不相等
