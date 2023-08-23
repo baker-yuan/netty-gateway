@@ -1,5 +1,8 @@
 package com.baker.gateway.common.config;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * dubbo协议的注册服务调用模型类
  */
@@ -19,6 +22,21 @@ public class DubboServiceInvoker extends AbstractServiceInvoker {
 	
 	// dubbo服务的版本号
 	private String version;
+
+
+	public boolean bizEquals(DubboServiceInvoker obj) {
+		return Objects.equals(this.invokerPath, obj.getInvokerPath()) &&
+				this.timeout == obj.getTimeout()&&
+                Objects.equals(this.registerAddress, obj.getRegisterAddress()) &&
+                Objects.equals(this.interfaceClass, obj.getInterfaceClass()) &&
+                Objects.equals(this.methodName, obj.getMethodName()) &&
+                Arrays.equals(this.parameterTypes, obj.getParameterTypes()) &&
+                Objects.equals(this.version, obj.getVersion())
+				;
+	}
+
+
+
 
 	public String getRegisterAddress() {
 		return registerAddress;
@@ -59,5 +77,6 @@ public class DubboServiceInvoker extends AbstractServiceInvoker {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	
+
+
 }

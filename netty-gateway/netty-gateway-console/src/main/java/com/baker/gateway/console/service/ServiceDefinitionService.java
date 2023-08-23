@@ -3,6 +3,7 @@ package com.baker.gateway.console.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baker.gateway.common.config.DubboServiceInvoker;
@@ -15,6 +16,7 @@ import com.baker.gateway.console.mapper.ServiceDefinitionMapper;
 import com.baker.gateway.discovery.api.Registry;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,15 +56,87 @@ public class ServiceDefinitionService {
 
 		// 没有修改到任何字段
 		ServiceDefinitionEntity updateEntity = modelToEntity(serviceDefinition);
-		if (dbEntity.equals(updateEntity)) {
+
+		Map<String, ServiceInvoker> invokerMap = new HashMap<>();
+		if (definitionDiff(dbEntity, updateEntity, invokerMap)) {
 			return;
 		}
 
-		// 保存到草稿中，手动发布上线
-		dbEntity.setDraft(JSONUtil.toJSONString(updateEntity));
+		// 保存到草稿中，手动发布上线，只能修改指定字段
+		ServiceDefinitionEntity draft = new ServiceDefinitionEntity();
+		BeanUtils.copyProperties(dbEntity, draft);
+		draft.setInvokerMap(JSONUtil.toJSONString(invokerMap));
+		dbEntity.setDraft(JSONUtil.toJSONString(draft));
 		serviceDefinitionMapper.update(dbEntity);
 	}
 
+	public boolean definitionDiff(ServiceDefinitionEntity dbEntity, ServiceDefinitionEntity updateEntity, Map<String, ServiceInvoker> invokerMap) {
+		switch (dbEntity.getProtocol()) {
+			case GatewayProtocol.HTTP:
+				Map<String, HttpServiceInvoker> dbHttpInvokerMap = JSONUtil.parse(dbEntity.getInvokerMap(), new TypeReference<Map<String, HttpServiceInvoker>>() {});
+				Map<String, HttpServiceInvoker> reportHttpInvokerMap = JSONUtil.parse(updateEntity.getInvokerMap(), new TypeReference<Map<String, HttpServiceInvoker>>() {});
+				// 相等判断
+				if (dbHttpInvokerMap.size() == reportHttpInvokerMap.size()) {
+					// 遍历上报数据
+					for (Map.Entry<String, HttpServiceInvoker> entry : reportHttpInvokerMap.entrySet()) {
+						// db里面也有
+						boolean equals = true;
+						if (dbHttpInvokerMap.containsKey(entry.getKey())) {
+							if (!dbHttpInvokerMap.get(entry.getKey()).bizEquals(entry.getValue())) {
+								equals = false;
+							}
+						}
+						if (equals) {
+							return true;
+						}
+					}
+				}
+				// 不相等
+				for (Map.Entry<String, HttpServiceInvoker> entry : reportHttpInvokerMap.entrySet()) {
+					if (dbHttpInvokerMap.containsKey(entry.getKey())) {
+						HttpServiceInvoker value = entry.getValue();
+						value.setRuleId(dbHttpInvokerMap.get(entry.getKey()).getRuleId());
+						invokerMap.put(entry.getKey(), value);
+					} else {
+						invokerMap.put(entry.getKey(), entry.getValue());
+					}
+				}
+				break;
+			case GatewayProtocol.DUBBO:
+				Map<String, DubboServiceInvoker> dbDoubleInvokerMap = JSONUtil.parse(dbEntity.getInvokerMap(), new TypeReference<Map<String, DubboServiceInvoker>>() {});
+				Map<String, DubboServiceInvoker> reportDoubleInvokerMap = JSONUtil.parse(updateEntity.getInvokerMap(), new TypeReference<Map<String, DubboServiceInvoker>>() {});
+				// 相等判断
+				if (dbDoubleInvokerMap.size() == reportDoubleInvokerMap.size()) {
+					// 遍历上报数据
+					for (Map.Entry<String, DubboServiceInvoker> entry : reportDoubleInvokerMap.entrySet()) {
+						// db里面也有
+						boolean equals = true;
+						if (dbDoubleInvokerMap.containsKey(entry.getKey())) {
+							if (!dbDoubleInvokerMap.get(entry.getKey()).bizEquals(entry.getValue())) {
+								equals = false;
+							}
+						}
+						if (equals) {
+							return true;
+						}
+					}
+				}
+				// 不相等
+				for (Map.Entry<String, DubboServiceInvoker> entry : reportDoubleInvokerMap.entrySet()) {
+					if (dbDoubleInvokerMap.containsKey(entry.getKey())) {
+						DubboServiceInvoker value = entry.getValue();
+						value.setRuleId(dbDoubleInvokerMap.get(entry.getKey()).getRuleId());
+						invokerMap.put(entry.getKey(), value);
+					} else {
+						invokerMap.put(entry.getKey(), entry.getValue());
+					}
+				}
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
 
 	/**
 	 * 发布

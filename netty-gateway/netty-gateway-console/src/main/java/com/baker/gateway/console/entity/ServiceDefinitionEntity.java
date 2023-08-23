@@ -44,26 +44,5 @@ public class ServiceDefinitionEntity {
 
 
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        // todo invokerMap比对
-        ServiceDefinitionEntity entity = (ServiceDefinitionEntity) obj;
-        return Objects.equals(serviceId, entity.getServiceId()) &&
-                Objects.equals(basePath, entity.getBasePath()) &&
-                Objects.equals(protocol, entity.getProtocol()) &&
-                Objects.equals(enable, entity.getEnable()) &&
-                Objects.equals(invokerMap, entity.getInvokerMap());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(serviceId, basePath, protocol, enable);
-    }
 
 }
