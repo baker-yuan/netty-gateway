@@ -14,8 +14,10 @@ public class DefaultCacheManager {
 	}
 	
 	public static final String FILTER_CONFIG_CACHE_ID = "filterConfigCache";
-	
-	//	这个是全局的缓存，双层缓存
+
+	/**
+	 * 这个是全局的缓存，双层缓存
+	 */
 	private final ConcurrentHashMap<String, Cache<String, ?>> cacheMap = new ConcurrentHashMap<>();
 
 	private static class SingletonHolder {
